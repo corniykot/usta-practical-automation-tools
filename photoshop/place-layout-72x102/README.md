@@ -6,36 +6,14 @@ Every complete set of 8 images is merged into one Photoshop layer. A final incom
 
 ## A4 layout
 
-Each image is prepared at:
+Designed for printing on **70 × 100 mm blanks** with a **1 mm bleed on every side**.
 
-- **72 × 102 mm** print size
-- **102 × 72 mm** occupied size after the 90° layout rotation
-
-The A4 portrait layout is **2 columns × 4 rows**.
-
-### Horizontal
-
-- Left margin: **2 mm**
-- Image: **102 mm**
+- Print size: **72 × 102 mm**
+- Layout: **8 per A4 sheet (2 × 4)**
+- Side margins: **2 mm**
 - Column gap: **2 mm**
-- Image: **102 mm**
-- Right margin: **2 mm**
-
-Total: **210 mm**
-
-### Vertical
-
-- Top margin: **3 mm**
-- Image: **72 mm**
-- Row gap: **1 mm**
-- Image: **72 mm**
-- Row gap: **1 mm**
-- Image: **72 mm**
-- Row gap: **1 mm**
-- Image: **72 mm**
-- Bottom margin: **3 mm**
-
-Total: **297 mm**
+- Top/bottom margins: **3 mm**
+- Row gaps: **1 mm**
 
 ## Workflow
 
