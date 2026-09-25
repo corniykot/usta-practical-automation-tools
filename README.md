@@ -14,7 +14,7 @@ The goal of this repository is simple: if a repetitive task can be reduced to a 
 | [Print All Layers](photoshop/print-all-layers/) | Prints top-level layers from the current Photoshop document one by one. | Tested on Photoshop CS6 |
 | [Place Layout 102×142](photoshop/place-layout-102x142/) | Normalizes sideways source orientation when needed, places images at exactly 102 × 142 mm, and cycles them through a tested 2 × 2 A4 layout with 2.5 mm side margins and a 1 mm center gap. | Tested on Photoshop CS6 |
 | [Place Rotate Layout 142×202](photoshop/place-rotate-layout-142x202/) | Normalizes sideways source orientation when needed, sizes images to 142 × 202 mm, applies the required 90° layout rotation, and alternates between top and bottom positions on A4. | Tested on Photoshop CS6 |
-| [Place Layout A4 Portrait](photoshop/place-layout-a4-portrait/) | Normalizes sideways source orientation when needed, resizes each image to full A4 portrait size (210 × 297 mm), and stacks imported files as aligned layers. | Tested on Photoshop CS6 |
+| [Place Layout A4 Portrait](photoshop/place-layout-a4-portrait/) | Normalizes sideways source orientation when needed, resizes each image to full A4 portrait size (210 × 297 mm), and stacks imported files as aligned layers. | Tested on Photoshop CS6 |\n| [Place Layout 72×102](photoshop/place-layout-72x102/) | Normalizes source orientation, sizes images to 72 × 102 mm, arranges 8 per A4 sheet with 2 mm side margins, 2 mm column gap, 3 mm top/bottom margins and 1 mm row gaps, then merges each sheet into one layer. | Ready for production test |
 
 ### Photoshop layout workflow assumptions
 
