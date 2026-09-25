@@ -1,0 +1,64 @@
+# Photoshop — Place Layout 72×102
+
+Places all supported images from a selected folder into an active A4 portrait document, normalizes sideways source orientation, resizes every image to exactly **72 × 102 mm**, rotates it for the print layout, and arranges up to **8 images per A4 sheet layer**.
+
+Every complete set of 8 images is merged into one Photoshop layer. A final incomplete set is also merged into one layer, so the result can be printed with the repository's **Print All Layers** tool.
+
+## A4 layout
+
+Each image is prepared at:
+
+- **72 × 102 mm** print size
+- **102 × 72 mm** occupied size after the 90° layout rotation
+
+The A4 portrait layout is **2 columns × 4 rows**.
+
+### Horizontal
+
+- Left margin: **2 mm**
+- Image: **102 mm**
+- Column gap: **2 mm**
+- Image: **102 mm**
+- Right margin: **2 mm**
+
+Total: **210 mm**
+
+### Vertical
+
+- Top margin: **3 mm**
+- Image: **72 mm**
+- Row gap: **1 mm**
+- Image: **72 mm**
+- Row gap: **1 mm**
+- Image: **72 mm**
+- Row gap: **1 mm**
+- Image: **72 mm**
+- Bottom margin: **3 mm**
+
+Total: **297 mm**
+
+## Workflow
+
+1. Create or open an **A4 portrait document, 210 × 297 mm**, in Photoshop.
+2. Run `Place_Layout_72x102.jsx`.
+3. Select the folder containing the source images.
+4. The script sorts the files alphabetically.
+5. Landscape source files are rotated to portrait orientation before sizing.
+6. Every image is forced to exactly **72 × 102 mm**.
+7. Each image is rotated 90° for the A4 layout and placed at its exact position.
+8. Every 8 images are merged into one layer named like `Sheet_01_8pcs`.
+9. If the last sheet contains fewer than 8 images, it is merged into one layer such as `Sheet_03_5pcs`.
+
+Supported source formats: JPG, JPEG, PNG, TIFF, PSD, BMP.
+
+## Notes
+
+- The script checks that the active document is approximately A4 portrait before processing.
+- Images are initially placed as Smart Objects.
+- Merging each sheet produces one final layer for that sheet.
+- Source artwork should already have a suitable aspect ratio. The script enforces the exact target width and height and does not perform intelligent cropping.
+- The generated sheet layers are intended to work directly with `photoshop/print-all-layers/`.
+
+## Status
+
+**Ready for production test in Photoshop CS6.**
