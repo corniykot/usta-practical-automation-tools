@@ -29,6 +29,14 @@ Designed for printing on **70 × 100 mm blanks** with a **1 mm bleed on every si
 
 Supported source formats: JPG, JPEG, PNG, TIFF, PSD, BMP.
 
+## Tested result
+
+The script has been **tested successfully in Photoshop CS6** on an A4 portrait document.
+
+The screenshot below shows the generated **2 × 4 layout with 8 images on one A4 sheet**, after placement and sizing by the script.
+
+![Tested Photoshop CS6 result — 72×102 mm layout](tested-layout-72x102.png)
+
 ## Notes
 
 - The script checks that the active document is approximately A4 portrait before processing.
@@ -39,4 +47,4 @@ Supported source formats: JPG, JPEG, PNG, TIFF, PSD, BMP.
 
 ## Status
 
-**Ready for production test in Photoshop CS6.**
+**Tested successfully in Photoshop CS6.**
