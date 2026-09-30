@@ -1,38 +1,20 @@
 # Place Rotate Layout 142×202
 
-Places every supported image from a selected folder into the active Photoshop document, automatically corrects sideways source orientation when needed, resizes each placed Smart Object to exactly **142 × 202 mm**, rotates it **90°** for the A4 layout, and alternates between two fixed positions.
+Places every supported image from a selected folder into the active Photoshop document, normalizes sideways source orientation, resizes each image to exactly **142 × 202 mm**, rotates it **90°** for the A4 layout, and alternates between two fixed positions.
 
-## Intended workflow
+## Versions
 
-Before running the script:
-
-- Create or open an **A4 document (210 × 297 mm)** in Photoshop for a standard desktop printer.
-- Prepare source artwork in the intended print proportion before placement. Typical source proportions are **2:3** or standard **ISO A-series** proportions such as A3, A4, A5, A6, and related sizes.
-- Use source files that are already composed correctly. This script handles orientation normalization, placement, rotation, and physical sizing; it does not crop or intelligently recompose images.
-
-## Automatic orientation check
-
-The script inspects each placed Smart Object before resizing.
-
-- If the placed source is already portrait-oriented, it is left unchanged.
-- If the placed source is wider than it is tall, it is treated as a sideways source and rotated 90° before the final physical size is applied.
-
-After orientation normalization and resizing to 142 × 202 mm, the script applies the separate 90° layout rotation required to fit two images vertically on an A4 sheet.
-
-This check happens before resizing so source orientation can still be detected reliably.
+- `Place_Rotate_Layout_142x202.jsx` — original tested version.
+- `Place_Rotate_Layout_142x202_safe_v2.jsx` — safe batch version. If one image fails to import or process, it is skipped, the batch continues, and the error is written to a TXT log. The log is saved beside the script when possible, otherwise in the source-image folder.
 
 ## Layout
 
-After the final layout rotation, each image occupies **202 × 142 mm** on the sheet.
-
-Position order:
+After the final layout rotation, each image occupies **202 × 142 mm** on A4.
 
 1. Top — X 4 mm, Y 4 mm
 2. Bottom — X 4 mm, Y 148 mm
 
-The vertical spacing between the two positions is 2 mm.
-
-After the second image, the cycle starts again from the top position, so image 3 overlaps image 1, image 4 overlaps image 2, and so on. This is intentional and useful when several print sets are prepared as stacked layers in one document.
+The positions repeat for additional files, creating stacked print sets.
 
 ## Requirements
 
@@ -40,23 +22,25 @@ After the second image, the cycle starts again from the top position, so image 3
 - Tested environment: Photoshop CS6
 - Active A4 document, 210 × 297 mm
 
-## Usage
+## How to run
 
-1. Open the A4 target Photoshop document.
-2. Run `Place_Rotate_Layout_142x202.jsx`.
-3. Select the folder containing the images.
-4. The script places, checks orientation, normalizes sideways files when needed, resizes, applies the final layout rotation, names, and positions every supported image automatically.
+1. Open the A4 target document in Photoshop.
+2. In Photoshop choose **File → Scripts → Browse…**
+3. Select `Place_Rotate_Layout_142x202.jsx` or the safe version `Place_Rotate_Layout_142x202_safe_v2.jsx`.
+4. Select the folder containing the source images.
+5. The script handles orientation, exact sizing, rotation, naming, and placement automatically.
+
+Optional: copy the JSX file into Photoshop's `Presets/Scripts` folder and restart Photoshop. The script will then appear directly under **File → Scripts**.
 
 Supported formats: JPG, JPEG, PNG, TIFF, PSD, BMP.
 
 ## Notes
 
 - Images are placed as Smart Objects.
-- Layer names are taken from the source filenames without extensions.
-- Width and height are forced independently to exactly 142 × 202 mm after orientation normalization. Images with an unsuitable aspect ratio will still be stretched.
-- Physical dimensions are calculated from the resolution of the active Photoshop document.
-- Source orientation correction and layout rotation are separate steps: the first fixes a sideways source file, while the second is always applied to produce the intended A4 top/bottom arrangement.
+- Width and height are forced independently to exactly 142 × 202 mm.
+- Source orientation correction and the final 90° layout rotation are separate steps.
+- Safe version: failed files do not consume a layout position; the next valid image uses that slot.
 
 ## Status
 
-**Tested on Photoshop CS6, including automatic orientation correction and final layout rotation.**
+**Original version tested on Photoshop CS6. Safe version added for fault-tolerant batch processing; production testing still required.**

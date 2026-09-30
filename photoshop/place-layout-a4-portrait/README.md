@@ -1,32 +1,15 @@
 # Place Layout A4 Portrait
 
-Places every supported image from a selected folder into the active Photoshop document as a Smart Object, automatically corrects sideways source orientation when needed, resizes each image to exactly **210 × 297 mm**, and aligns it to the top-left corner of the A4 canvas.
+Automatically places every supported image from a folder into an active Photoshop document as a Smart Object, corrects sideways source orientation, resizes each image to exactly **210 × 297 mm**, and aligns it to the A4 canvas.
 
-## Intended workflow
+## Versions
 
-Before running the script:
-
-- Create or open an **A4 portrait document (210 × 297 mm)** in Photoshop for a standard desktop printer.
-- Prepare source artwork in the intended print proportion before placement. Typical source proportions are **2:3** or standard **ISO A-series** proportions such as A3, A4, A5, A6, and related sizes.
-- Use source files that are already composed correctly. This script handles orientation normalization, placement, and physical sizing; it does not crop or intelligently recompose images.
-
-## Automatic orientation check
-
-The script inspects each placed Smart Object before resizing.
-
-- If the placed source is already portrait-oriented, it is left unchanged.
-- If the placed source is wider than it is tall, it is treated as a sideways source and rotated 90° before the final physical size is applied.
-
-This check happens before resizing so source orientation can still be detected reliably.
+- `Place_Layout_A4_Portrait.jsx` — original tested version.
+- `Place_Layout_A4_Portrait_safe_v2.jsx` — safe batch version. Failed imports are skipped, the batch continues, and errors are written to a TXT log beside the script or in the source-image folder.
 
 ## Layout
 
-Each image is resized to exactly **210 × 297 mm** and positioned at:
-
-- X = 0 mm
-- Y = 0 mm
-
-All imported images use the same position, so multiple files become stacked layers in the active A4 document.
+Each image is resized to exactly **210 × 297 mm** and positioned at X 0 mm / Y 0 mm. Multiple files become stacked layers in the active document.
 
 ## Requirements
 
@@ -34,22 +17,24 @@ All imported images use the same position, so multiple files become stacked laye
 - Tested environment: Photoshop CS6
 - Active A4 portrait document, 210 × 297 mm
 
-## Usage
+## How to run
 
-1. Open the A4 portrait target document.
-2. Run `Place_Layout_A4_Portrait.jsx`.
-3. Select the folder containing the images.
-4. The script places, checks orientation, rotates sideways files when needed, resizes, names, and aligns every supported image automatically.
+1. Open the A4 portrait target document in Photoshop.
+2. Choose **File → Scripts → Browse…**
+3. Select `Place_Layout_A4_Portrait.jsx` or `Place_Layout_A4_Portrait_safe_v2.jsx`.
+4. Select the folder containing the source images.
+5. The script checks orientation, resizes, names, and aligns every valid image automatically.
+
+Optional: copy the JSX file into Photoshop's `Presets/Scripts` folder and restart Photoshop. It will then appear directly under **File → Scripts**.
 
 Supported formats: JPG, JPEG, PNG, TIFF, PSD, BMP.
 
 ## Notes
 
 - Images are placed as Smart Objects.
-- Layer names are taken from the source filenames without extensions.
-- Width and height are forced independently to exactly 210 × 297 mm after orientation normalization. Images with an unsuitable aspect ratio will be stretched.
-- Physical dimensions are calculated from the resolution of the active Photoshop document.
+- Width and height are forced independently to exactly 210 × 297 mm.
+- Safe version: broken or unreadable images are skipped and logged instead of stopping the batch.
 
 ## Status
 
-**Tested on Photoshop CS6, including automatic orientation correction.**
+**Original version tested on Photoshop CS6. Safe version added for fault-tolerant batch processing; production testing still required.**
