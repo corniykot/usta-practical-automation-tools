@@ -40,11 +40,11 @@ That makes it useful as the final step after automated layout scripts or any wor
 - a document containing printable top-level layers
 - printer settings confirmed with a manual test print
 
-Tested environment: **Adobe Photoshop CS6 Extended 13.0.1 (32-bit) on Windows**.
+Tested in **Adobe Photoshop CS6 on Windows**.
 
 ## Install
 
-Copy `Print_All_Layers.jsx` to Photoshop's Scripts folder. On Photoshop CS6 this is typically:
+Copy `Print_All_Layers.jsx` to Photoshop's Scripts folder. On Windows, the Photoshop Scripts folder is typically:
 
 `C:\Program Files (x86)\Adobe\Adobe Photoshop CS6\Presets\Scripts\`
 
