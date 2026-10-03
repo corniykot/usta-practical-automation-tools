@@ -1,38 +1,75 @@
-# Photoshop — Print All Layers
+# Photoshop Print Automation — Print All Layers Separately
 
-Print the top-level non-background layers of the current Photoshop document one by one, using the document's current print settings.
+A small Photoshop script for a very repetitive job: **print every top-level layer separately without clicking Print over and over again**.
 
-## Workflow
+Set up the document, make one test print, confirm the printer settings, and run the script. It goes through the printable layers one by one, sends each layer to the printer using Photoshop's current print settings, then restores the document's original visibility state.
 
-1. Prepare the Photoshop document yourself: layer content, size, position, and color correction.
-2. Make one manual test print and confirm all print settings.
+No exporting. No temporary files. No babysitting every print.
+
+## Useful for
+
+- **batch printing in Photoshop** — print a stack of prepared layers automatically
+- **photo and art print production** — one finished image per layer, one print per image
+- **small print shops and studio workflows** — reduce repetitive operator work on recurring jobs
+- **sublimation, transfers, stickers, magnets, and craft production** — run prepared designs through the same print setup
+- **production and prepress automation** — turn a manually repeated Photoshop step into a one-command workflow
+
+If your document is already prepared as **one job per layer**, this script handles the boring part.
+
+## How it works
+
+1. Prepare the Photoshop document with one printable job on each top-level layer.
+2. Make **one manual test print** and confirm the printer, paper, scale, orientation, color, and other print settings.
 3. Run `Print_All_Layers.jsx`.
-4. The script hides all printable layers, then shows and prints them one at a time.
-5. When finished, it restores the original visibility state of the layers.
+4. The script hides the printable layers and prints them individually, one at a time.
+5. When the batch is finished, the original layer visibility is restored.
 
-## Important
+The script uses Photoshop's existing print setup. It does not change printer settings for you.
 
-- No naming convention is required.
-- The script ignores the Background layer.
-- It currently processes only top-level `ArtLayer` layers, not layers nested inside groups.
-- Layers are printed in the order returned by Photoshop's top-level layer stack.
-- It uses `printOneCopy()`, so always make a manual test print first.
-- Tested target: Adobe Photoshop CS6 Extended 13.0.1 (32-bit) on Windows.
+## Why this instead of Photoshop Actions?
 
-## Install in Photoshop CS6
+For a simple production document, the job is not really “run an action on every file.” The jobs are already sitting inside one Photoshop document as layers.
 
-Copy `Print_All_Layers.jsx` to Photoshop's scripts folder, typically:
+**Print All Layers** works directly with that structure: layer → print → next layer → print.
+
+That makes it useful as the final step after automated layout scripts or any workflow that builds multiple print-ready jobs as separate layers.
+
+## Requirements
+
+- Adobe Photoshop with ExtendScript / JSX support
+- a document containing printable top-level layers
+- printer settings confirmed with a manual test print
+
+Tested environment: **Adobe Photoshop CS6 Extended 13.0.1 (32-bit) on Windows**.
+
+## Install
+
+Copy `Print_All_Layers.jsx` to Photoshop's Scripts folder. On Photoshop CS6 this is typically:
 
 `C:\Program Files (x86)\Adobe\Adobe Photoshop CS6\Presets\Scripts\`
 
-Restart Photoshop. The script will then appear under:
+Restart Photoshop. The script will appear under:
 
-`File → Scripts → Print_All_Layers`
+**File → Scripts → Print_All_Layers**
 
-You can assign a keyboard shortcut via:
+For an even faster production workflow, assign it a keyboard shortcut:
 
-`Edit → Keyboard Shortcuts → Application Menus → File → Scripts`
+**Edit → Keyboard Shortcuts → Application Menus → File → Scripts**
+
+## Notes
+
+- No layer naming convention is required.
+- The Background layer is ignored.
+- Only top-level `ArtLayer` layers are processed; layers inside groups are not.
+- Layers are printed in Photoshop's top-level layer order.
+- The script uses `printOneCopy()`.
+- Original layer visibility is restored after a successful batch.
+- Always make one manual test print before running a production batch.
 
 ## Status
 
-Field-tested on a real multi-image print batch.
+**Field-tested on a real multi-image print batch.**
+
+## Contact
+
+Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
