@@ -67,4 +67,4 @@ Built to remove a repetitive Photoshop prepress step while keeping the operator 
 
 ## Contact
 
-Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
+Questions, feedback, bug reports, or suspiciously repetitive Photoshop work: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
