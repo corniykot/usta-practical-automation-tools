@@ -38,3 +38,7 @@ Supported formats: JPG, JPEG, PNG, TIFF, PSD, BMP.
 ## Status
 
 **Original version tested on Photoshop CS6. Safe version added for fault-tolerant batch processing; production testing still required.**
+
+## Contact
+
+Found a bug? Found a better way? Found another task that should never be done manually again? [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
