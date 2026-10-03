@@ -1,6 +1,6 @@
-# Photoshop A5-Style Print Layout Script — 142×202 mm on A4
+# Photoshop A5 Print Layout Script — 142×202 mm on A4
 
-A free **Photoshop JSX / ExtendScript** for automatically building an exact-size print layout from a folder of images.
+A free **Photoshop JSX / ExtendScript** for automatically building an exact-size A5-style print layout from a folder of images.
 
 The script batch-places images into Photoshop, checks their orientation, resizes every image to exactly **142 × 202 mm**, rotates it for printing, and positions **two images on an A4 sheet**.
 
@@ -87,3 +87,7 @@ It is useful as a lightweight Photoshop automation for exact-size printing when 
 ## Status
 
 **Original version tested on Photoshop CS6. Safe version added for fault-tolerant batch processing; production testing still required.**
+
+## Contact
+
+Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
