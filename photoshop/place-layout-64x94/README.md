@@ -45,3 +45,7 @@ The safe version was tested with a batch containing import failures:
 ## Status
 
 **Safe version tested successfully in Photoshop CS6.**
+
+## Contact
+
+For bugs, ideas, or workflows held together by too many clicks: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
