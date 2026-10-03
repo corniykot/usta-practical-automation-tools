@@ -84,4 +84,4 @@ Optional: copy the JSX file into Photoshop's `Presets/Scripts` folder and restar
 
 ## Contact
 
-Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
+Questions, feedback, or a workflow that has been testing your patience since 2007: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
