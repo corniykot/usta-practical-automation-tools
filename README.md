@@ -13,7 +13,7 @@ The goal of this repository is simple: if a repetitive task can be reduced to a 
 | [Print Folder](photoshop/print-folder/) | Places every image from a folder into the current Photoshop document and prints it using the current print settings. | Tested on Photoshop CS6 |
 | [Print All Layers](photoshop/print-all-layers/) | Prints top-level layers from the current Photoshop document one by one. | Tested on Photoshop CS6 |
 | [Place Layout 102×142](photoshop/place-layout-102x142/) | Exact-size 102 × 142 mm A4 batch layout with orientation checking. Safe version available with skip-on-error logging. | Original tested on Photoshop CS6; safe version pending test |
-| [Place Rotate Layout 142×202](photoshop/place-rotate-layout-142x202/) | Exact-size 142 × 202 mm layout with automatic orientation normalization and 90° print rotation. Safe version available with skip-on-error logging. | Original tested on Photoshop CS6; safe version pending test |
+| [A5 Place Rotate Layout 142×202](photoshop/place-rotate-layout-142x202/) | A5-style exact-size 142 × 202 mm layout with automatic orientation normalization and 90° print rotation. Safe version available with skip-on-error logging. | Original tested on Photoshop CS6; safe version pending test |
 | [Place Layout A4 Portrait](photoshop/place-layout-a4-portrait/) | Batch-places images as full A4 portrait layers with orientation checking. Safe version available with skip-on-error logging. | Original tested on Photoshop CS6; safe version pending test |
 
 ### Photoshop layout workflow assumptions
@@ -50,3 +50,7 @@ English is the default language for all public tools in this repository.
 ## License
 
 MIT License. See [LICENSE](LICENSE).
+
+## Contact
+
+Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
