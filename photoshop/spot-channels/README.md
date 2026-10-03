@@ -1,109 +1,80 @@
-# Photoshop Spot Channel Tools — Preflight, Rename & Alpha-to-Spot Conversion
+# Photoshop Spot Channel Manager — Preflight, Rename & Alpha-to-Spot Conversion
 
-Two small Photoshop prepress utilities for the part of the job that somehow always ends with somebody staring at the Channels panel.
+A compact Photoshop prepress utility for inspecting and managing **spot channels, alpha channels, white ink, Pantone and other special-color separations** in one place.
 
-**Spot Channel Check** inspects the file.  
-**Spot Channel Manager** lets you clean up channel names and deliberately convert alpha channels to real Spot Color channels.
+Open it and the document is inspected immediately. If everything is correct, close it. If something needs attention, rename the channel or deliberately convert an Alpha channel to a real Spot Color channel without leaving the same window.
 
-No RIP impersonation. No mystery automation. The operator stays in charge.
+No separate checker. No second pass through the same file.
 
-## Why spot channels need checking
+## What it shows
 
-Spot channels carry production information for inks and finishes outside the normal process-color channels: **white ink, Pantone and other spot inks, varnish, metallics, specialty colors, and other print separations**.
+For every non-component channel, Spot Channel Manager displays:
 
-The pixels matter, but so does the channel itself. A regular alpha channel is not the same thing as a Spot Color channel, and channel naming can matter when the file reaches another application or RIP.
+- channel type: **SPOT / ALPHA**
+- status: **OK / EMPTY / CHECK**
+- current channel name
+- editable new name
+- explicit **Alpha → Spot** conversion option
 
-That is where these tools live: between **“the artwork looks fine”** and **“why did the RIP ignore the white?”**
+It also shows the Photoshop document color mode.
 
-## Spot Channel Check
+This makes it useful for **Photoshop spot channel preflight**, especially when receiving PSD or TIFF production files with white ink, Pantone colors, varnish, metallics or other special separations.
 
-`Spot_Channel_Check.jsx` gives you a fast preflight report without changing the document.
+## What it changes
 
-It reports:
+Nothing until you click **Apply**.
 
-- document color mode
-- real **Spot Color channels**
-- regular **alpha channels**
-- empty channels
-- unusual non-component channels that deserve a look
-- exact channel names
+Then it can:
 
-Example:
+- rename selected spot or alpha channels
+- safely handle channel-name swaps
+- convert only the Alpha channels you explicitly mark into **Spot Color channels**
 
-```text
-SPOT CHANNEL CHECK
+It does **not** delete channels, alter artwork, flatten the document, save the file, print anything, or guess what your printer wants.
 
-Document mode: CMYK
+Channel naming can matter downstream. A printer or RIP may expect a specific name for white ink, varnish or another spot separation, so the script leaves that decision to the operator.
 
-Spot channels:
-White — OK
-PANTONE 186 C — OK
-Varnish — OK
-
-Alpha channels:
-Alpha 1 — CHECK
-
-Empty channels:
-None
-
-3 spot channels found.
-```
-
-Useful when a PSD or TIFF arrives from somebody else and you would rather inspect the production data **before it becomes somebody else's problem**.
-
-## Spot Channel Manager
-
-`Spot_Channel_Manager.jsx` handles the next step.
-
-It lists the document's non-component channels in one window and shows whether each one is **SPOT**, **ALPHA**, or another channel type.
-
-From there you can:
-
-- rename spot and alpha channels
-- correct channel names for the target print workflow
-- deliberately convert an **Alpha channel → Spot Color channel**
-- review all requested changes before clicking **Apply**
-
-Nothing is renamed or converted automatically.
-
-That matters because `White`, `W1`, `Spot1`, `Spot 1`, `Varnish`, and other names are not universal synonyms. Different printers and RIP workflows may expect different names. The script does not pretend to know which machine is waiting at the other end.
+Built for the moment before a production file becomes somebody else's problem.
 
 ## Typical workflows
 
-These tools are useful around:
+Useful for:
 
-- **Photoshop spot channel preflight**
-- **white ink / spot white preparation**
-- **Pantone and custom spot-color separations**
-- **UV and flatbed printing**
-- **DTF / UV DTF production**
-- **varnish, gloss, metallic and specialty-ink channels**
-- PSD/TIFF handoff to a RIP or another prepress application
-- troubleshooting files with forgotten alpha channels or questionable channel names
+- Photoshop spot color and spot channel preflight
+- white ink / spot white preparation
+- Pantone and custom spot-color separations
+- UV and flatbed printing
+- DTF / UV DTF production
+- varnish, gloss, metallic and specialty-ink channels
+- PSD/TIFF handoff to RIP and prepress workflows
+- finding empty or accidental alpha channels
+- correcting spot channel names before output
 
-They are intentionally small tools. They do not replace separation preview, trapping, overprint checks, RIP preflight, or the production specification supplied by the printer.
+This is a Photoshop utility, not a replacement for separation preview, trapping, overprint checks, RIP preflight, or the printer's production specification.
 
 ## Install
 
-Copy the JSX files to Photoshop's Scripts folder and restart Photoshop.
+Copy `Spot_Channel_Manager.jsx` to Photoshop's Scripts folder and restart Photoshop.
 
-Then run `File → Scripts → Spot_Channel_Check` or `File → Scripts → Spot_Channel_Manager`.
+Run:
 
-You can also run either file directly through `File → Scripts → Browse...`.
+`File → Scripts → Spot_Channel_Manager`
+
+Or use:
+
+`File → Scripts → Browse...`
 
 ## Safety
 
-**Spot Channel Check** is read-only.
+Inspection itself is read-only. Changes happen only after **Apply**.
 
-**Spot Channel Manager** changes only the channel names you edit and the Alpha → Spot conversions you explicitly select. It does not delete channels, alter artwork, flatten the document, save the file, or send anything to print.
-
-For production work, save a copy and verify the resulting channels in the target RIP/workflow before output.
+For production work, save a copy and verify the resulting spot channels in the target RIP/workflow before output.
 
 ## Status
 
-**First public prototypes.**
+**First public prototype.**
 
-Built to reduce repetitive Photoshop prepress work without turning a tiny script into a six-meter printing press.
+Test it on non-critical files before adding it to a production workflow.
 
 ## Contact
 
