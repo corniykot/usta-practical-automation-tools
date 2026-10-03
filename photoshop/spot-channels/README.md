@@ -78,4 +78,4 @@ Test it on non-critical files before adding it to a production workflow.
 
 ## Contact
 
-Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
+If this saved you clicks — or created exciting new ones — tell us: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
