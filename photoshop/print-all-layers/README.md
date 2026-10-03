@@ -72,4 +72,4 @@ For an even faster production workflow, assign it a keyboard shortcut:
 
 ## Contact
 
-Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
+If your workflow involves “and then I do this 80 more times,” we should probably talk: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
