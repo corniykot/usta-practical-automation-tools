@@ -90,4 +90,4 @@ It is useful as a lightweight Photoshop automation for exact-size printing when 
 
 ## Contact
 
-Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
+Questions, feedback, or a Photoshop task you're tired of doing by hand: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
