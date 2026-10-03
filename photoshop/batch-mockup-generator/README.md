@@ -137,4 +137,4 @@ Photoshop batch mockup generator, Photoshop mockup automation, batch replace Sma
 
 ## Contact
 
-Questions, bug reports, workflow examples, or custom automation requests: **usta.scripts@gmail.com**
+If Photoshop makes you do the same thing 200 times, tell us about it: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
