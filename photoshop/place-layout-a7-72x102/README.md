@@ -64,4 +64,4 @@ The original script has been **tested successfully in Photoshop CS6**.
 
 ## Contact
 
-Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
+Have a Photoshop routine that feels suspiciously like unpaid data entry? [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
