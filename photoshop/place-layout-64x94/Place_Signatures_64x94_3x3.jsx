@@ -68,7 +68,6 @@ app.bringToFront();
         function resizeToWidthMM(layer, widthMM) {
 
             var targetWidth = mmToPx(widthMM);
-
             var b = getBoundsPx(layer);
 
             var scale = (
@@ -130,7 +129,7 @@ app.bringToFront();
             197.5
         ];
 
-        // User chooses the signature/logo manually.
+        // User chooses the signature/logo once.
         var signatureFile = File.openDialog(
             "Choose signature / logo file"
         );
@@ -139,48 +138,30 @@ app.bringToFront();
             return;
         }
 
-        // Separate editable folder.
+        // All 9 signatures stay as separate editable Smart Objects.
         var group = doc.layerSets.add();
         group.name = "Signatures_64x94_3x3";
 
-        // Place once as Smart Object.
-        var master = placeFile(signatureFile);
-
-        master.name = "Signature_01";
-
-        resizeToWidthMM(
-            master,
-            25
-        );
-
-        moveSignature(
-            master,
-            X_MM[0],
-            Y_MM[0]
-        );
-
-        master.move(
-            group,
-            ElementPlacement.INSIDE
-        );
-
-        // Duplicate for the remaining 8 positions.
-        var index = 2;
+        var index = 1;
 
         for (var row = 0; row < 3; row++) {
 
             for (var col = 0; col < 3; col++) {
 
-                if (row === 0 && col === 0) {
-                    continue;
-                }
-
-                var layer = master.duplicate();
+                // Place the source file again each time.
+                // Do not duplicate an existing Smart Object:
+                // every signature must remain independently editable.
+                var layer = placeFile(signatureFile);
 
                 layer.name =
                     "Signature_" +
                     (index < 10 ? "0" : "") +
                     index;
+
+                resizeToWidthMM(
+                    layer,
+                    25
+                );
 
                 moveSignature(
                     layer,
@@ -199,10 +180,10 @@ app.bringToFront();
 
         alert(
             "Done.\n" +
-            "9 signatures placed.\n" +
+            "9 independent signatures placed.\n" +
             "Width: 25 mm\n" +
             "Right/bottom margin: 3 mm\n" +
-            "Layers remain editable."
+            "Each Smart Object can be edited separately."
         );
 
     } catch (e) {
