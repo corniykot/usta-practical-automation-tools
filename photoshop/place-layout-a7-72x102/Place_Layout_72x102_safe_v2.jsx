@@ -194,7 +194,7 @@ app.bringToFront();
             var currentH = b[3].as("px") - b[1].as("px");
 
             if (currentW > currentH) {
-                layer.rotate(90, AnchorPosition.MIDDLECENTER);
+                layer.rotate(-90, AnchorPosition.MIDDLECENTER);
             }
         }
 
