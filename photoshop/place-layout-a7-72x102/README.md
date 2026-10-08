@@ -86,6 +86,8 @@ Optional: copy the JSX files into Photoshop's `Presets/Scripts` folder and resta
 
 The original layout script has been **tested successfully in Photoshop CS6**.
 
+`Place_Layout_72x102_safe_v2.jsx` has also been **tested successfully in Photoshop CS6**. The fault-tolerant version continues batch processing when an individual source file fails and writes the failure to its error log.
+
 The signature / watermark helper has also been **tested successfully in the real 72 × 102 mm production layout**.
 
 ![Tested Photoshop CS6 result — 72×102 mm A7 print layout](tested-layout-72x102.png)
@@ -104,7 +106,7 @@ Photoshop watermark script, Photoshop signature script, batch watermark Photosho
 
 ## Status
 
-**Original layout version tested successfully in Photoshop CS6. Signature / watermark helper tested successfully. Safe layout version added; production testing still required.**
+**Original layout version, safe v2 layout version, and signature / watermark helper all tested successfully in Photoshop CS6 / real production workflow.**
 
 ## Contact
 
