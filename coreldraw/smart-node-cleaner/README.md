@@ -1,6 +1,21 @@
-# USTA Smart Node Cleaner
+# USTA Smart Node Cleaner — CorelDRAW Node Reduction & Bézier Curve Cleanup
 
-A CorelDRAW 2018 VBA tool for removing redundant nodes from curves while checking each proposed change against the **original, untouched geometry**. Made for imported vectors, traced artwork, and converted lettering that arrive with more nodes than anyone ordered.
+**Reduce unnecessary nodes in CorelDRAW without blindly smoothing away the details you need.**
+
+Imported SVG, PDF and other vector artwork, bitmap traces, and text converted to curves can leave you with hundreds of extra Bézier nodes. The result is familiar: curves become tedious to edit, and files take more work to prepare for laser cutting, vinyl cutting, plotting, engraving, or print production.
+
+CorelDRAW already includes **Reduce Nodes** and curve-smoothing tools. The difficult part is choosing how much simplification is acceptable: removing more nodes can also reshape a contour. **USTA Smart Node Cleaner** takes a different, tolerance-based approach. It tests candidate node deletions against the **unchanged original curve** and keeps only changes that stay within the specified **sampled deviation**.
+
+A practical CorelDRAW 2018 VBA macro for designers and production workshops who want **fewer nodes, with measurable control over shape changes** — not a promise of mathematically identical geometry.
+
+## When to use it
+
+- **Traced logos and bitmap-to-vector artwork** with excessive control points.
+- **Imported vector paths** that are difficult to edit or clean up.
+- **Lettering converted to curves** before production.
+- **Laser, CNC, vinyl cutter and plotter preparation** where manageable contours matter.
+
+It works on one selected CorelDRAW Curve object at a time. It does not join disconnected paths, repair open contours, or automatically optimize cutting order.
 
 ## Versions and status
 
@@ -8,6 +23,10 @@ A CorelDRAW 2018 VBA tool for removing redundant nodes from curves while checkin
 - **v0.6 — stable fallback:** tested macro with text prompts. Kept unchanged as a rollback option.
 
 The v0.7 engine uses the same node-removal and sampled-distance routines as v0.6, with a UserForm entry point. Identical output between the two versions has **not** yet been independently regression-tested on the same saved geometry.
+
+## How it differs from CorelDRAW's Reduce Nodes
+
+The built-in command is useful for quick cleanup. USTA is for cases where you want to **set a deviation tolerance** and compare each proposed deletion to the original geometry instead of applying an unspecified amount of smoothing. The trade-off is speed: repeated candidate testing can be slow on complex curves.
 
 ## What it does
 
@@ -61,6 +80,11 @@ Files in this folder:
 - This is a **manual VBA installation**, not a one-click installer.
 
 For a simpler fallback, use [v0.6](Usta_Smart_Node_Cleaner_v0_6.bas).
+
+## Further reading
+
+- [CorelDRAW Help: adding, removing and joining nodes](https://help.coreldraw.com/CorelDRAW/540111192/Documentation-Windows/CorelDRAW-en/CorelDRAW-Add-remove-join-nodes.html) — built-in node reduction and its effect on curves.
+- [CorelDRAW Community: Reduce Nodes in VBA](https://community.coreldraw.com/sdk/f/code-snippets-feedback/61711/how-apply-reduce-nodes-in-vba) — practical discussion of automation, varying artwork scale and unwanted changes to appearance.
 
 ## Feedback and contact
 
