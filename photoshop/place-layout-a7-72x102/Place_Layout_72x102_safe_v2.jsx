@@ -60,9 +60,7 @@ app.bringToFront();
             return 0;
         });
 
-        logFile = createLogFile("Place_Layout_72x102");
-        logLine("Files found: " + files.length);
-        logLine("");
+        // Create a TXT log only if at least one source file fails.
 
         var imageWmm = 72;
         var imageHmm = 102;
@@ -135,6 +133,14 @@ app.bringToFront();
                 skippedCount++;
                 safeRemoveLayer(layer);
 
+                if (!logFile) {
+                    logFile = createLogFile("Place_Layout_72x102");
+                    if (logFile) {
+                        logLine("Files found: " + files.length);
+                        logLine("");
+                    }
+                }
+
                 logLine(
                     "SKIPPED: " +
                     files[i].fsName +
@@ -161,7 +167,7 @@ app.bringToFront();
                 "pcs";
         }
 
-        finishLog();
+        if (logFile) finishLog();
 
         alert(
             "Done.\n" +
