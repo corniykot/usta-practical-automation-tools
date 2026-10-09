@@ -6,6 +6,12 @@ The goal of this repository is simple: if a repetitive task can be reduced to a 
 
 ## Tools
 
+### CorelDRAW
+
+| Tool | What it does | Status |
+|---|---|---|
+| [USTA Smart Node Cleaner](coreldraw/smart-node-cleaner/) | Simplifies selected Bézier curves by testing node removal against the original sampled geometry. v0.7 includes a VBA UserForm; v0.6 remains the stable fallback. | v0.7 UI tested on CorelDRAW 2018; final text/regression check pending |
+
 ### Photoshop
 
 | Tool | What it does | Status |
@@ -53,4 +59,8 @@ MIT License. See [LICENSE](LICENSE).
 
 ## Contact
 
-Questions, feedback, or custom workflow requests: **usta.scripts@gmail.com**
+These tools are built around real production problems. If something breaks, a short description of the workflow, application version, expected result, and a reproducible example are much more useful than a mysterious screenshot. Suggestions for small, practical automations are equally welcome.
+
+**Contact:** [usta.scripts@gmail.com](mailto:usta.scripts@gmail.com)
+
+*Less repetitive work. More time for the work that matters.*
