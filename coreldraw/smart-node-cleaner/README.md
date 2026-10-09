@@ -88,7 +88,7 @@ For a simpler fallback, use [v0.6](Usta_Smart_Node_Cleaner_v0_6.bas).
 
 ## Feedback and contact
 
-This tool exists for actual production files, not benchmark-perfect demo curves. If it saves you time, I'd like to know what kind of artwork you used it on. If it behaves badly, even better: send the CorelDRAW version, node counts before and after, tolerance, attempt limit, and a minimal reproducible curve if you can share one.
+This tool exists for actual production files, not benchmark-perfect demo curves that have never experienced a deadline. If it saves you time, I'd love to know what kind of artwork you used it on. If it behaves badly, even better — do send the CorelDRAW version, node counts before and after, tolerance, attempt limit, and a minimal reproducible curve if you can share one. Misbehaving Bézier curves deserve a fair trial, after all.
 
 Bug reports, improvement ideas, and proposals for other practical production automations are welcome at **[usta.scripts@gmail.com](mailto:usta.scripts@gmail.com)**.
 
