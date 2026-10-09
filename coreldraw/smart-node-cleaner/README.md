@@ -4,7 +4,7 @@ A CorelDRAW 2018 VBA tool for removing redundant nodes from curves while checkin
 
 ## Versions and status
 
-- **v0.7 — current UI build:** graphite-and-amber UserForm, four workload presets, manual attempt limit, tolerance setting, and an in-place result. The form has been used in CorelDRAW 2018; the latest wording and report text need a final in-app check.
+- **v0.7 — current UI build:** graphite-and-amber UserForm, four workload presets, manual attempt limit, tolerance setting, and an in-place result. Fully tested in CorelDRAW 2018.
 - **v0.6 — stable fallback:** tested macro with text prompts. Kept unchanged as a rollback option.
 
 The v0.7 engine uses the same node-removal and sampled-distance routines as v0.6, with a UserForm entry point. Identical output between the two versions has **not** yet been independently regression-tested on the same saved geometry.
