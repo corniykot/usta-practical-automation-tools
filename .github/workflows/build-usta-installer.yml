@@ -7,6 +7,7 @@ on:
       - ".github/workflows/build-usta-installer.yml"
       - "coreldraw/smart-node-cleaner/installer/**"
       - "coreldraw/smart-node-cleaner/UstaSmartNodeCleaner.gms"
+      - "coreldraw/smart-node-cleaner/Usta_Smart_Node_Cleaner.ico"
 
 permissions:
   contents: read
