@@ -71,11 +71,9 @@ Higher attempt limits can take longer, especially on complex geometry. The limit
 
 Do not paste the engine source into the form code window. The blank design-time form is expected because controls are created during `UserForm_Initialize`.
 
-## Download and code signing
+## Download
 
-The committed GMS file is the current project artifact, **not a signed Windows installer**. We are preparing a separate installer for a future release. No signing or SignPath Foundation endorsement is currently claimed.
-
-See [Code signing policy](../../CODE_SIGNING.md) for intended release provenance and verification. Automated, reproducible installer builds and a downloadable Windows release still need to be implemented before a signing request.
+Download the [GMS macro project](UstaSmartNodeCleaner.gms) or install from the published VBA source using the instructions above. No Windows installer is included.
 
 ## Production Notes
 
