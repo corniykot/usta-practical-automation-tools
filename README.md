@@ -55,7 +55,7 @@ English is the default language for all public tools in this repository.
 
 ## CorelDRAW distribution
 
-USTA Smart Node Cleaner is provided as a CorelDRAW GMS macro project and published VBA source. See the tool's README for installation instructions.
+USTA Smart Node Cleaner v0.73 is available as a GitHub Actions-built Windows installer, a GMS macro, and published VBA engine and form source. See the [tool's README](coreldraw/smart-node-cleaner/) for both installation paths.
 
 ## License
 
