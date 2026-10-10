@@ -15,11 +15,9 @@ geometric Hausdorff guarantee.
 
 ### Option A — Windows installer (recommended)
 
-**[Download the latest successful v0.73 installer build](https://github.com/corniykot/usta-practical-automation-tools/actions/workflows/build-usta-installer.yml)**
+**[Download USTA Smart Node Cleaner v0.73 — CorelDRAW 2018 / Windows 64-bit](USTA-Smart-Node-Cleaner-v0.73-Setup.zip)**
 
-Open a successful workflow run and download the
-`USTA-Smart-Node-Cleaner-v0.73-unsigned` artifact (GitHub may require login).
-Extract the ZIP, close CorelDRAW, and run the setup EXE.
+Download the ZIP from this folder, extract it, **close CorelDRAW**, and run the setup EXE.
 
 The installer copies the macro and its icon into the current user's
 CorelDRAW folder and integrates a button **at the end of the Standard
