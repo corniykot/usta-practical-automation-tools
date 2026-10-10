@@ -71,7 +71,7 @@ Public Sub UstaCleanRun(ByVal tol As Double, ByVal maxTrials As Long)
             If sp.Nodes.Count >= 4 Then
                 ' Closed paths have no privileged first/last node.
                 ' Open paths must keep their two endpoints.
-                If sp.IsClosed Then
+                If sp.Closed Then
                     i = sp.Nodes.Count
                 Else
                     i = sp.Nodes.Count - 1
@@ -80,7 +80,7 @@ Public Sub UstaCleanRun(ByVal tol As Double, ByVal maxTrials As Long)
                     Set sp = dst.Curve.SubPaths(p)
                     n = sp.Nodes.Count
                     If n < 4 Then Exit Do
-                    If Not sp.IsClosed And (i = 1 Or i = n) Then
+                    If Not sp.Closed And (i = 1 Or i = n) Then
                         i = i - 1
                     Else
                         trials = trials + 1
@@ -89,7 +89,7 @@ Public Sub UstaCleanRun(ByVal tol As Double, ByVal maxTrials As Long)
                         Set tsp = trial.Curve.SubPaths(p)
                         tsp.Nodes(i).Delete
                         ' Never accept a candidate that changes open/closed topology.
-                        If tsp.IsClosed <> sp.IsClosed Then
+                        If tsp.Closed <> sp.Closed Then
                             trial.Delete
                             Set trial = Nothing
                         Else
