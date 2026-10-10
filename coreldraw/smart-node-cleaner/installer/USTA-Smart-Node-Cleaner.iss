@@ -32,6 +32,7 @@ DisableWelcomePage=no
 
 [Files]
 Source: "..\UstaSmartNodeCleaner.gms"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Usta_Smart_Node_Cleaner.ico"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
 ; CorelDRAW must be restarted after installation to load new GMS macros.
