@@ -53,9 +53,9 @@ English is the default language for all public tools in this repository.
 - Keep the public source English-first; localize separately when needed.
 - Mark tools as tested only after real use.
 
-## Releases and signing
+## CorelDRAW distribution
 
-The CorelDRAW Smart Node Cleaner includes a GMS project and published VBA source. A signed Windows installer is planned but not yet released. See the [code signing policy](CODE_SIGNING.md) for build provenance and verification plans.
+USTA Smart Node Cleaner is provided as a CorelDRAW GMS macro project and published VBA source. See the tool's README for installation instructions.
 
 ## License
 
