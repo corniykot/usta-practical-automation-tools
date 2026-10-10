@@ -1,0 +1,39 @@
+name: Build USTA Smart Node Cleaner installer
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/build-usta-installer.yml"
+      - "coreldraw/smart-node-cleaner/installer/**"
+      - "coreldraw/smart-node-cleaner/UstaSmartNodeCleaner.gms"
+      - "coreldraw/smart-node-cleaner/Usta_Smart_Node_Cleaner.ico"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --yes --no-progress
+      - name: Compile unsigned installer
+        shell: pwsh
+        run: |
+          $compiler = "${env:ProgramFiles(x86)}\\Inno Setup 6\\ISCC.exe"
+          if (!(Test-Path $compiler)) { $compiler = "${env:ProgramFiles(x86)}\\Inno Setup 7\\ISCC.exe" }
+          if (!(Test-Path $compiler)) { throw "Inno Setup compiler not found" }
+          & $compiler "coreldraw\\smart-node-cleaner\\installer\\USTA-Smart-Node-Cleaner.iss"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload unsigned setup
+        uses: actions/upload-artifact@v4
+        with:
+          name: USTA-Smart-Node-Cleaner-v0.73-unsigned
+          path: coreldraw/smart-node-cleaner/installer/output/*.exe
+          if-no-files-found: error
+          retention-days: 30
+# GitHub Actions does not code-sign the executable. SmartScreen warnings may remain.
