@@ -89,8 +89,8 @@ Private Sub UserForm_Initialize()
 
     Set lblDonateTitle = AddLabel("lblDonateTitle", "DONATE", leftX, buttonY + 2, 62, 12, vbWhite, 8, False)
     lblDonateTitle.TextAlign = fmTextAlignCenter
-    Set lblDonatePay = AddLabel("lblDonatePay", "Pay", leftX + 15, buttonY + 15, 18, 12, RGB(0, 112, 186), 8, False)
-    Set lblDonatePal = AddLabel("lblDonatePal", "Pal", leftX + 30, buttonY + 15, 18, 12, RGB(0, 156, 222), 8, False)
+    Set lblDonatePay = AddLabel("lblDonatePay", "Pay", leftX + 6, buttonY + 15, 25, 12, RGB(0, 112, 186), 8, False)
+    Set lblDonatePal = AddLabel("lblDonatePal", "Pal", leftX + 31, buttonY + 15, 25, 12, RGB(0, 156, 222), 8, False)
     lblDonatePay.Font.Italic = True
     lblDonatePal.Font.Italic = True
     lblDonatePay.TextAlign = fmTextAlignRight
