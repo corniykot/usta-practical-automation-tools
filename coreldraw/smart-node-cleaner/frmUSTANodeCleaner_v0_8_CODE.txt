@@ -83,19 +83,30 @@ Private Sub UserForm_Initialize()
     btnGap = 12
     sideBtnW = 108
     mainBtnW = contentW - 2 * sideBtnW - 2 * btnGap
-    Set btnDonate = AddButton("btnDonate", "", leftX, buttonY, 52, 30, panel, vbWhite)
-    Set btnExplore = AddButton("btnExplore", "", leftX + 56, buttonY, 52, 30, panel, vbWhite)
-    Set lblDonateTitle = AddLabel("lblDonateTitle", "DONATE", leftX + 3, buttonY + 2, 46, 12, vbWhite, 8, False)
-    Set lblDonatePay = AddLabel("lblDonatePay", "Pay", leftX + 10, buttonY + 15, 18, 12, RGB(0, 112, 186), 8, False)
-    Set lblDonatePal = AddLabel("lblDonatePal", "Pal", leftX + 28, buttonY + 15, 18, 12, RGB(0, 156, 222), 8, False)
+    ' Compact support buttons, with centered two-line labels.
+    Set btnDonate = AddButton("btnDonate", "", leftX, buttonY, 62, 30, panel, vbWhite)
+    Set btnExplore = AddButton("btnExplore", "", leftX + 66, buttonY, 62, 30, panel, vbWhite)
+
+    Set lblDonateTitle = AddLabel("lblDonateTitle", "DONATE", leftX, buttonY + 2, 62, 12, vbWhite, 8, False)
+    lblDonateTitle.TextAlign = fmTextAlignCenter
+    Set lblDonatePay = AddLabel("lblDonatePay", "Pay", leftX + 13, buttonY + 15, 19, 12, RGB(0, 112, 186), 8, False)
+    Set lblDonatePal = AddLabel("lblDonatePal", "Pal", leftX + 32, buttonY + 15, 19, 12, RGB(0, 156, 222), 8, False)
     lblDonatePay.Font.Italic = True
     lblDonatePal.Font.Italic = True
-    Set lblExploreTitle = AddLabel("lblExploreTitle", "EXPLORE", leftX + 58, buttonY + 2, 49, 12, vbWhite, 8, False)
-    Set lblExploreGitHub = AddLabel("lblExploreGitHub", "GitHub", leftX + 64, buttonY + 15, 42, 12, muted, 8, False)
+    lblDonatePay.TextAlign = fmTextAlignRight
+    lblDonatePal.TextAlign = fmTextAlignLeft
+
+    Set lblExploreTitle = AddLabel("lblExploreTitle", "EXPLORE", leftX + 66, buttonY + 2, 62, 12, vbWhite, 8, False)
+    lblExploreTitle.TextAlign = fmTextAlignCenter
+    Set lblExploreGitHub = AddLabel("lblExploreGitHub", "GitHub", leftX + 66, buttonY + 15, 62, 12, muted, 8, False)
+    lblExploreGitHub.TextAlign = fmTextAlignCenter
+
+    ' Keep right edge aligned, shrink primary buttons and use 4pt gap.
+    Set btnCancel = AddButton("btnCancel", "CANCEL", leftX + contentW - 98, buttonY, 98, 30, panel, vbWhite)
+    Set btnClean = AddButton("btnClean", "CLEAN NODES", leftX + contentW - 98 - 4 - 114, buttonY, 114, 30, accent, RGB(20, 24, 30))
+
     AddLabel "footer", "Explore more tools on GitHub. Saved you some work? Buy me a coffee.", _
         leftX, buttonY + 42, contentW, 15, muted, 8, False
-    Set btnClean = AddButton("btnClean", "CLEAN NODES", leftX + sideBtnW + btnGap, buttonY, mainBtnW, 30, accent, RGB(20, 24, 30))
-    Set btnCancel = AddButton("btnCancel", "CANCEL", leftX + contentW - sideBtnW, buttonY, sideBtnW, 30, panel, vbWhite)
     btnClean.Default = True
     btnCancel.Cancel = True
 
