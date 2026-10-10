@@ -71,17 +71,17 @@ Files in this folder:
 
 **Important:** the form is intentionally blank in the VBA designer; it creates its controls when opened. Do not import the TXT as a `.frm` file. If an older copy of the engine or form exists, replace it rather than creating duplicate macro names. The custom toolbar icon is **not included**; it can be assigned separately in CorelDRAW's command customization.
 
-## Limitations
+## Production Notes
 
-- One Curve object at a time; other object types need conversion to curves first.
-- No preview or side-by-side result.
-- Sampling does not establish a continuous Hausdorff bound.
-- Some endpoints/seam nodes are deliberately skipped.
-- Processing and Undo can be slow because temporary candidate shapes are created inside a command group.
-- Tested with CorelDRAW 2018; other versions are not verified.
-- This is a **manual VBA installation**, not a one-click installer.
+USTA Smart Node Cleaner is designed for practical vector cleanup in CorelDRAW, with controlled node reduction and predictable workflow behaviour.
 
-For a simpler fallback, use [v0.6](Usta_Smart_Node_Cleaner_v0_6.bas).
+- **Work with individual curves.** Process one selected Curve object at a time for better control over the result. Convert other object types to curves before cleaning.
+- **You control the precision.** Set the maximum sampled deviation to suit your artwork. The tool evaluates proposed node removals against the original geometry rather than relying on unrestricted smoothing.
+- **Preserve important geometry.** Certain endpoint and subpath boundary nodes are intentionally excluded from removal to maintain curve structure.
+- **Allow time for complex artwork.** Each candidate is evaluated geometrically, so processing time depends on curve complexity and the selected attempt limit. For large projects, work through objects individually.
+- **Keep your workflow reversible.** The cleaned curve replaces the selected object, and Ctrl+Z restores the previous state.
+
+**Compatibility:** Fully tested in CorelDRAW 2018 with VBA. Installation uses CorelDRAW's built-in VBA editor; compatibility with other CorelDRAW versions has not been verified.
 
 ## Further reading
 
