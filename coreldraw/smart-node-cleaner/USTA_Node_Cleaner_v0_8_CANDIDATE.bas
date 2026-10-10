@@ -123,13 +123,11 @@ Public Sub UstaCleanRun(ByVal tol As Double, ByVal maxTrials As Long)
     cmd = False
     d.Unit = oldUnit
     unitSet = False
-    MsgBox "Cleanup complete." & vbCrLf & _
-        "Nodes removed: " & accepted & vbCrLf & vbCrLf & _
-        "Before: " & before & " nodes" & vbCrLf & _
-        "After: " & dst.Curve.Nodes.Count & " nodes" & vbCrLf & vbCrLf & _
-        "Attempts: " & trials & " / " & maxTrials & vbCrLf & _
-        "Tolerance: " & tol & " mm" & vbCrLf & vbCrLf & _
-        "Ctrl+Z to undo.", vbInformation, "USTA Smart Node Cleaner"
+    MsgBox "Cleanup complete. Nodes removed: " & accepted & _
+        "   |   Before: " & before & "   After: " & dst.Curve.Nodes.Count & vbCrLf & _
+        "Attempts: " & trials & " / " & maxTrials & _
+        "   |   Tolerance: " & tol & " mm   |   Ctrl+Z to undo.", _
+        vbInformation, "USTA Smart Node Cleaner"
     Exit Sub
 Failure:
     failed = "Error " & Err.Number & ": " & Err.Description
