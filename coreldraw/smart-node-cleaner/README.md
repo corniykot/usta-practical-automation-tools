@@ -15,7 +15,7 @@ geometric Hausdorff guarantee.
 
 ### Option A — Windows installer (recommended)
 
-**[Download USTA Smart Node Cleaner v0.73 — CorelDRAW 2018 / Windows 64-bit](USTA-Smart-Node-Cleaner-v0.73-Setup.zip)**
+**[Download USTA Smart Node Cleaner v0.73 — CorelDRAW 2018 / Windows 64-bit](USTA-Smart-Node-Cleaner-v0.73-Corel2018-Win64.zip)**
 
 Download the ZIP from this folder, extract it, **close CorelDRAW**, and run the setup EXE.
 
