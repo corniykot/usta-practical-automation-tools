@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Test fresh Windows PowerShell integration
+        shell: pwsh
+        run: ./coreldraw/smart-node-cleaner/installer/Test-InstallerIntegration.ps1
       - name: Install Inno Setup
         shell: pwsh
         run: choco install innosetup --yes --no-progress
