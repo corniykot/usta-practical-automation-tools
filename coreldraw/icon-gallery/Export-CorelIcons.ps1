@@ -80,14 +80,20 @@ $template = @'
 <style>
 :root{color-scheme:dark;font-family:Segoe UI,Arial,sans-serif}
 body{background:#1f242c;color:#e7ebef;margin:0;padding:24px}
+body.light{background:#f5f5f5;color:#222}
 h1{margin:0 0 8px;font-size:24px}
 p{color:#a9b3c2}
+body.light p{color:#555}
 .bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:sticky;top:0;background:#1f242c;padding:14px 0;z-index:2}
+body.light .bar{background:#f5f5f5}
 input{background:#343c49;border:1px solid #667080;border-radius:6px;color:white;padding:9px;font-size:15px;width:200px}
 button{background:#414b59;border:0;border-radius:6px;color:white;padding:9px 12px;cursor:pointer}
 button:disabled{opacity:.4}
+body.light input,body.light button{background:#fff;color:#222;border-color:#aaa}
 #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:10px}
 .cell{background:#303744;border:1px solid #495364;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;height:88px;gap:8px}
+body.light .cell{background:#fff;border-color:#ccc}
+body.light .cell span{color:#333}
 .cell img{width:40px;height:40px;object-fit:contain;image-rendering:auto}
 .cell span{font-size:12px;color:#bac2ce;font-variant-numeric:tabular-nums}
 </style>
@@ -97,12 +103,13 @@ button:disabled{opacity:.4}
 <p>Icons exported from your local installation. The number under each icon is its zero-based resource index.</p>
 <div class="bar">
 <label>Index <input id="filter" placeholder="e.g. 123" inputmode="numeric"></label>
-<button id="prev">← Previous</button><span id="status"></span><button id="next">Next →</button>
+<button id="theme">Light / Dark</button><button id="prev">← Previous</button><span id="status"></span><button id="next">Next →</button>
 </div>
 <div id="grid"></div>
 <script>
 const icons=__ICON_INDEX_JSON__;
 const perPage=120;
+document.getElementById('theme').addEventListener('click',()=>document.body.classList.toggle('light'));
 let page=0;
 const grid=document.getElementById('grid'),filter=document.getElementById('filter');
 const prev=document.getElementById('prev'),next=document.getElementById('next'),status=document.getElementById('status');
