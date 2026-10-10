@@ -214,7 +214,7 @@ Private Sub OpenUrl(ByVal url As String)
 End Sub
 
 Private Sub OpenDonate()
-    OpenUrl "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=corniykot34%40gmail.com&item_name=Optional+thank-you+for+free+USTA+software&currency_code=USD"
+    OpenUrl "https://www.paypal.com/ncp/payment/PUPB8U5QQFLYU"
 End Sub
 
 Private Sub OpenExplore()
