@@ -10,7 +10,7 @@ The goal of this repository is simple: if a repetitive task can be reduced to a 
 
 | Tool | What it does | Status |
 |---|---|---|
-| [USTA Smart Node Cleaner](coreldraw/smart-node-cleaner/) | Simplifies selected Bézier curves by testing node removal against the original sampled geometry. v0.7 includes a VBA UserForm; v0.6 remains the stable fallback. | Fully tested in CorelDRAW 2018 (v0.7) |
+| [USTA Smart Node Cleaner](coreldraw/smart-node-cleaner/) | Simplifies selected Bézier curves by testing node removal against the original sampled geometry. v0.73 is the current VBA UserForm build; previous versions remain available. | Tested in CorelDRAW 2018 (v0.73) |
 
 ### Photoshop
 
@@ -52,6 +52,10 @@ English is the default language for all public tools in this repository.
 - Document the exact workflow and limitations.
 - Keep the public source English-first; localize separately when needed.
 - Mark tools as tested only after real use.
+
+## Releases and signing
+
+The CorelDRAW Smart Node Cleaner includes a GMS project and published VBA source. A signed Windows installer is planned but not yet released. See the [code signing policy](CODE_SIGNING.md) for build provenance and verification plans.
 
 ## License
 
