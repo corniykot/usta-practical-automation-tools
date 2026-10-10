@@ -66,3 +66,6 @@ Assert ((Get-Content (Join-Path $testDir 'success.log') -Raw) -match 'PASS: tool
 $after = @($protected | ForEach-Object { (Get-FileHash -LiteralPath $_).Hash })
 Assert (($before -join ',') -ceq ($after -join ',')) 'All three protected payloads byte-identical'
 Write-Output ('Diagnostic fixtures/logs: ' + $testDir)
+# The last child deliberately returned 1. All assertions passed; do not let
+# GitHub's pwsh step wrapper reuse that expected negative-test exit code.
+exit 0
