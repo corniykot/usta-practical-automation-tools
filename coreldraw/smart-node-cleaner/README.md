@@ -2,7 +2,7 @@
 
 **Reduce unnecessary nodes in CorelDRAW without blindly smoothing away the details you need.**
 
-Imported SVG, PDF and other vector artwork, bitmap traces, and text converted to curves can leave you with hundreds of extra Bézier nodes. The result is familiar: curves become tedious to edit, and files take more work to prepare for laser cutting, vinyl cutting, plotting, engraving, or print production.
+Imported SVG, PDF and other vector artwork, bitmap traces, and text converted to curves can leave you with hundreds of extra Bézier nodes. The result is familiar: curves become tedious to edit, and files take more work to prepare for laser cutting, plotting, engraving, or print production.
 
 CorelDRAW already includes **Reduce Nodes** and curve-smoothing tools. The difficult part is choosing how much simplification is acceptable: removing more nodes can also reshape a contour. **USTA Smart Node Cleaner** takes a different, tolerance-based approach. It tests candidate node deletions against the **unchanged original curve** and keeps only changes that stay within the specified **sampled deviation**.
 
@@ -13,7 +13,7 @@ A practical CorelDRAW 2018 VBA macro for designers and production workshops who 
 - **Traced logos and bitmap-to-vector artwork** with excessive control points.
 - **Imported vector paths** that are difficult to edit or clean up.
 - **Lettering converted to curves** before production.
-- **Laser, CNC, vinyl cutter and plotter preparation** where manageable contours matter.
+- **Laser, CNC and plotter preparation** where manageable contours matter.
 
 It works on one selected CorelDRAW Curve object at a time. It does not join disconnected paths, repair open contours, or automatically optimize cutting order.
 
@@ -21,8 +21,6 @@ It works on one selected CorelDRAW Curve object at a time. It does not join disc
 
 - **v0.7 — current UI build:** graphite-and-amber UserForm, four workload presets, manual attempt limit, tolerance setting, and an in-place result. Fully tested in CorelDRAW 2018.
 - **v0.6 — stable fallback:** tested macro with text prompts. Kept unchanged as a rollback option.
-
-The v0.7 engine uses the same node-removal and sampled-distance routines as v0.6, with a UserForm entry point. Identical output between the two versions has **not** yet been independently regression-tested on the same saved geometry.
 
 ## How it differs from CorelDRAW's Reduce Nodes
 
@@ -49,7 +47,11 @@ The original geometry stays the fixed comparison reference throughout processing
 | Extreme | 4096 attempts | Preset; warning |
 | Manual attempt limit | 512 | 128–4096 |
 
-The attempt limit is a cap, not a promise to perform that many trials. Higher limits may take considerably longer, particularly with complicated geometry.
+**For best results, clean complex artwork one object at a time.** This keeps each cleanup focused and avoids unnecessary processing.
+
+**4096 attempts is a per-run safety limit, not a total cleanup limit.** If the attempt limit is reached and the curve still has redundant nodes, simply run Smart Node Cleaner again on the resulting curve. Repeat as needed.
+
+Higher attempt limits can take longer, especially on complex geometry. The limit exists to keep processing manageable, not to restrict how far a curve can be simplified.
 
 ## Install v0.7 (CorelDRAW 2018)
 
