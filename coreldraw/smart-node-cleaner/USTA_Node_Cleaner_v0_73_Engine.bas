@@ -1,6 +1,6 @@
 Option Explicit
 
-' USTA Smart Node Cleaner v0.733 - CorelDRAW 2018
+' USTA Smart Node Cleaner v0.73 - CorelDRAW 2018
 ' UserForm UI; algorithm based on v0.6 stable baseline.
 ' Global two-sided sampled distance to the untouched source subpath.
 ' Sampled approximation, not an exact Hausdorff bound.
