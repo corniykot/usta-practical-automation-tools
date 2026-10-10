@@ -105,8 +105,10 @@ Private Sub UserForm_Initialize()
     Set btnCancel = AddButton("btnCancel", "CANCEL", leftX + contentW - 98, buttonY, 98, 30, panel, vbWhite)
     Set btnClean = AddButton("btnClean", "CLEAN NODES", leftX + contentW - 98 - 4 - 114, buttonY, 114, 30, accent, RGB(20, 24, 30))
 
-    AddLabel "footer", "Explore more tools on GitHub. Saved you some work? Buy me a coffee.", _
-        leftX, buttonY + 42, contentW, 15, muted, 8, False
+    Dim footer As MSForms.Label
+    Set footer = AddLabel("footer", "Explore more tools on GitHub. Saved you some work? Buy me a coffee.", _
+        leftX, buttonY + 42, contentW, 15, muted, 8, False)
+    footer.Font.Italic = True
     btnClean.Default = True
     btnCancel.Cancel = True
 
