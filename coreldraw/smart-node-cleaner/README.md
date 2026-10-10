@@ -19,8 +19,9 @@ It works on one selected CorelDRAW Curve object at a time. It does not join disc
 
 ## Versions and status
 
-- **v0.7 — current UI build:** graphite-and-amber UserForm, four workload presets, manual attempt limit, tolerance setting, and an in-place result. Fully tested in CorelDRAW 2018.
-- **v0.6 — stable fallback:** tested macro with text prompts. Kept unchanged as a rollback option.
+- **v0.73 — current tested build:** CorelDRAW 2018 VBA UserForm, two-sided sampled tolerance comparison, repeated passes over closed curves, support links and adjustable attempt limit. The project file is available as [UstaSmartNodeCleaner.gms](UstaSmartNodeCleaner.gms).
+- **v0.7 — previous version:** kept as historical engine and UI source.
+- **v0.6 — stable fallback:** text-prompt version retained for rollback.
 
 ## How it differs from CorelDRAW's Reduce Nodes
 
@@ -53,23 +54,28 @@ The original geometry stays the fixed comparison reference throughout processing
 
 Higher attempt limits can take longer, especially on complex geometry. The limit exists to keep processing manageable, not to restrict how far a curve can be simplified.
 
-## Install v0.7 (CorelDRAW 2018)
+## Install v0.73 (CorelDRAW 2018)
 
-Files in this folder:
+**Direct installation:** Download [UstaSmartNodeCleaner.gms](UstaSmartNodeCleaner.gms), close CorelDRAW, and copy it to the applicable CorelDRAW VBA macro/GMS folder for your installation. Start CorelDRAW and run the USTA Smart Node Cleaner macro. If the available entry point or displayed version differs, verify the macro project's embedded VBA code: the GMS binary was uploaded separately from the current source files.
 
-- [`USTA_Node_Cleaner_v0_7_Engine.bas`](USTA_Node_Cleaner_v0_7_Engine.bas) — VBA engine and macro entry point.
-- [`frmUSTANodeCleaner_CODE.txt`](frmUSTANodeCleaner_CODE.txt) — code for the UserForm; controls are generated at runtime.
+**Install from published source:**
 
-1. Save your work and **back up your existing CorelDRAW VBA/GMS project**.
-2. In CorelDRAW, open the VBA editor with **Alt+F11**.
-3. Import `USTA_Node_Cleaner_v0_7_Engine.bas` using **File → Import File**.
-4. In the same VBA project, choose **Insert → UserForm**.
-5. In the Properties window (F4), set the form's **(Name)** to `frmUSTANodeCleaner`.
-6. Open the form's code window (F7) and paste the **entire** contents of `frmUSTANodeCleaner_CODE.txt`.
-7. Run **Debug → Compile VBAProject**.
-8. Select one curve in CorelDRAW and run `UstaSmartNodeCleanerV07` from the Macros dialog.
+- [USTA_Node_Cleaner_v0_73_Engine.bas](USTA_Node_Cleaner_v0_73_Engine.bas) — current VBA engine, entry point `UstaSmartNodeCleanerV073`.
+- [frmUSTANodeCleaner_v0_73_CODE.txt](frmUSTANodeCleaner_v0_73_CODE.txt) — matching UserForm code (controls created at runtime).
 
-**Important:** the form is intentionally blank in the VBA designer; it creates its controls when opened. Do not import the TXT as a `.frm` file. If an older copy of the engine or form exists, replace it rather than creating duplicate macro names. The custom toolbar icon is **not included**; it can be assigned separately in CorelDRAW's command customization.
+1. Open CorelDRAW 2018, then the VBA editor (**Alt+F11**).
+2. In a VBA project, import the engine with **File → Import File**.
+3. Create a blank UserForm, set its **(Name)** to `frmUSTANodeCleaner`, and paste the form code into the form's code window (**F7**).
+4. Compile with **Debug → Compile VBAProject**.
+5. Select one curve and run `UstaSmartNodeCleanerV073`.
+
+Do not paste the engine source into the form code window. The blank design-time form is expected because controls are created during `UserForm_Initialize`.
+
+## Download and code signing
+
+The committed GMS file is the current project artifact, **not a signed Windows installer**. We are preparing a separate installer for a future release. No signing or SignPath Foundation endorsement is currently claimed.
+
+See [Code signing policy](../../CODE_SIGNING.md) for intended release provenance and verification. Automated, reproducible installer builds and a downloadable Windows release still need to be implemented before a signing request.
 
 ## Production Notes
 
@@ -77,11 +83,11 @@ USTA Smart Node Cleaner is designed for practical vector cleanup in CorelDRAW, w
 
 - **Work with individual curves.** Process one selected Curve object at a time for better control over the result. Convert other object types to curves before cleaning.
 - **You control the precision.** Set the maximum sampled deviation to suit your artwork. The tool evaluates proposed node removals against the original geometry rather than relying on unrestricted smoothing.
-- **Preserve important geometry.** Certain endpoint and subpath boundary nodes are intentionally excluded from removal to maintain curve structure.
+- **Preserve important geometry.** Open-path endpoints are retained; closed paths are checked cyclically.
 - **Allow time for complex artwork.** Each candidate is evaluated geometrically, so processing time depends on curve complexity and the selected attempt limit. For large projects, work through objects individually.
 - **Keep your workflow reversible.** The cleaned curve replaces the selected object, and Ctrl+Z restores the previous state.
 
-**Compatibility:** Fully tested in CorelDRAW 2018 with VBA. Installation uses CorelDRAW's built-in VBA editor; compatibility with other CorelDRAW versions has not been verified.
+**Compatibility:** Tested by the developer in CorelDRAW 2018 with VBA. Installation uses CorelDRAW's built-in VBA editor; compatibility with other CorelDRAW versions has not been verified.
 
 ## Further reading
 
