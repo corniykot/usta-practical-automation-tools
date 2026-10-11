@@ -1,19 +1,33 @@
-# USTA Smart Node Cleaner v0.73
+# USTA Smart Node Cleaner v0.73 — CorelDRAW Curve Simplification & Node Reduction
 
-**Fewer Bézier nodes. More control over the shape.**
+**Too many nodes after tracing? Reduce unnecessary Bézier nodes without blindly smoothing away your artwork.**
 
-A practical curve-cleanup tool for **CorelDRAW 2018 (64-bit)**, designed for
-traced logos, imported vector art, lettering converted to curves, and
-laser/CNC/plotter preparation.
+USTA Smart Node Cleaner is a **CorelDRAW 2018 (Windows 64-bit) VBA macro** for vector path cleanup, node reduction, and tolerance-controlled Bézier curve simplification. It is designed for traced logos, bitmap-to-vector artwork, imported SVG/PDF paths, lettering converted to curves, and vector preparation for laser cutting, engraving, vinyl cutting, CNC, and plotters.
 
-USTA tests proposed node removals against the original curve using a
-two-way sampled deviation check. It removes nodes only when the sampled
-deviation is within the tolerance you choose.
+Unlike a generic smoothing command, USTA tests each proposed node removal against the **unchanged original curve**, using a two-way sampled deviation check. You choose the allowed deviation in millimeters, so node reduction is guided by a measurable tolerance rather than just a visual smoothness setting.
 
 ## How it differs from CorelDRAW's Reduce Nodes
 
 The built-in command is useful for quick cleanup. USTA is for cases where you want to **set a deviation tolerance** and compare each proposed deletion to the original geometry instead of applying an unspecified amount of smoothing. The trade-off is speed: repeated candidate testing can be slow on complex curves.
 
+
+## Problems it solves
+
+- **Too many nodes after bitmap tracing or PowerTRACE?** Clean up dense curves that are difficult to select, edit, or reshape manually.
+- **Does Reduce Nodes round off corners or distort a logo?** Set a maximum *sampled* curve deviation instead of relying only on a smoothness slider.
+- **Imported SVG or PDF has messy vector paths?** Simplify the nodes of an individual selected Curve object before further editing or production.
+- **Preparing artwork for laser cutting, engraving, vinyl cutting, or plotting?** Reduce unnecessary path complexity while keeping control of contour changes. This tool does **not** repair open paths, merge disconnected objects, or optimize cutting order.
+- **Cleaning converted text or detailed outlines?** Work one curve at a time, inspect the result, and undo if necessary.
+
+## Quick answers
+
+**What is USTA Smart Node Cleaner?** A CorelDRAW 2018 VBA macro that removes candidate Bézier nodes when the sampled curve deviation remains within your chosen tolerance.
+
+**How is it different from CorelDRAW Reduce Nodes?** CorelDRAW provides built-in node reduction and a curve smoothness control; USTA explicitly evaluates proposed removals against the unchanged original curve with a tolerance expressed in millimeters.
+
+**Will it preserve the exact original shape?** It limits the deviation measured by its sampling method; it does not mathematically prove zero deviation or guarantee unchanged geometry everywhere.
+
+**Does it work on all objects or CorelDRAW versions?** It processes one selected Curve object at a time and has been tested in CorelDRAW 2018 (64-bit). Other versions have not been verified.
 
 ## Get started
 
