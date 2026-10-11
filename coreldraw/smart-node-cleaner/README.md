@@ -2,7 +2,7 @@
 
 **Too many nodes after tracing? Reduce unnecessary Bézier nodes without blindly smoothing away your artwork.**
 
-USTA Smart Node Cleaner is a **CorelDRAW 2018 (Windows 64-bit) VBA macro** for vector path cleanup, node reduction, and tolerance-controlled Bézier curve simplification. It is designed for traced logos, bitmap-to-vector artwork, imported SVG/PDF paths, lettering converted to curves, and vector preparation for laser cutting, engraving, vinyl cutting, CNC, and plotters.
+USTA Smart Node Cleaner is a **CorelDRAW 2018 (Windows 64-bit) VBA macro** for vector path cleanup, node reduction, and tolerance-controlled Bézier curve simplification. It is designed for traced logos, bitmap-to-vector artwork, imported SVG/PDF paths, lettering converted to curves, and vector preparation for laser cutting, engraving, vinyl cutting, CNC, and plotters. It also helps web and UI designers simplify complex SVG icons, logos, and illustrations by reducing excessive anchor points before SVG export.
 
 Unlike a generic smoothing command, USTA tests each proposed node removal against the **unchanged original curve**, using a two-way sampled deviation check. You choose the allowed deviation in millimeters, so node reduction is guided by a measurable tolerance rather than just a visual smoothness setting.
 
@@ -18,14 +18,6 @@ The built-in command is useful for quick cleanup. USTA is for cases where you wa
 - **Preparing artwork for laser cutting, engraving, vinyl cutting, or plotting?** Reduce unnecessary path complexity while keeping control of contour changes. This tool does **not** repair open paths, merge disconnected objects, or optimize cutting order.
 - **Cleaning converted text or detailed outlines?** Work one curve at a time, inspect the result, and undo if necessary.
 - **Exporting a traced logo or illustration as SVG for a website?** Reduce excessive Bézier nodes in CorelDRAW before export to make the vector paths simpler. Fewer path segments can also reduce the exported SVG's path data, depending on the artwork and export settings.
-
-## SVG cleanup for web and UI design
-
-A traced logo, complex SVG icon, or decorative web illustration can contain far more anchor points than its visible shape needs. That makes the vector harder to edit and can produce unnecessarily complex SVG `path` data.
-
-**USTA simplifies the geometry before SVG export from CorelDRAW.** Use it to reduce excessive nodes in a selected curve while controlling the measured deviation from the original outline. Then export to SVG and, if needed, run an SVG optimizer such as [SVGO](https://github.com/svg/svgo) to clean up markup, metadata, and coordinate precision.
-
-**Geometry cleanup and SVG code optimization are different jobs.** USTA does not edit SVG markup, minify XML, or guarantee a specific reduction in file size or faster page loading. It is most useful when the source artwork contains genuinely redundant curve nodes, especially after bitmap tracing.
 
 ## Quick answers
 
