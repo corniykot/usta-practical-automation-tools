@@ -42,8 +42,7 @@ CorelDRAW folder and integrates a button **at the end of the Standard
 toolbar**. The button launches the existing macro. The integration preserves
 a workspace backup. Start CorelDRAW after installation.
 
-The setup is **not digitally signed**. GitHub Actions builds the installer;
-building on GitHub is not a substitute for code signing.
+The setup EXE is **not digitally signed**.
 
 ### Option B — inspect or install manually
 
@@ -67,8 +66,6 @@ code and compile the VBA project. The form builds its controls at runtime.
 
 The custom toolbar icon is installed automatically by the Windows installer.
 Manual GMS installation does not automatically add that toolbar button.
-For auditability, the [installer source](installer/) includes the icon
-integration script and build instructions.
 
 ## How it works
 
@@ -91,16 +88,13 @@ The button and icon have been verified locally across restarts;
 installation on a second clean machine and uninstall behavior have not
 been fully validated.
 
-The current public installer is an unsigned GitHub Actions artifact, not a
-digitally signed release.
+The downloadable setup EXE is not digitally signed.
 
 ## Earlier milestones
 
 The historical [v0.1](Usta_Smart_Node_Cleaner_v0_1.bas) and
 [v0.3](Usta_Smart_Node_Cleaner_v0_3_FAST.bas) are retained, along with a
 [v0.3 result image](smart-node-cleaner-v0.3-result.png).
-Intermediate experiments are kept in the development archive, not
-recommended for current use.
 
 ## License and contact
 
