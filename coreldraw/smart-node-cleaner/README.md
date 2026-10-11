@@ -10,7 +10,6 @@ Unlike a generic smoothing command, USTA tests each proposed node removal agains
 
 The built-in command is useful for quick cleanup. USTA is for cases where you want to **set a deviation tolerance** and compare each proposed deletion to the original geometry instead of applying an unspecified amount of smoothing. The trade-off is speed: repeated candidate testing can be slow on complex curves.
 
-
 ## Problems it solves
 
 - **Too many nodes after bitmap tracing or PowerTRACE?** Clean up dense curves that are difficult to select, edit, or reshape manually.
@@ -41,8 +40,6 @@ The installer copies the macro and its icon into the current user's
 CorelDRAW folder and integrates a button **at the end of the Standard
 toolbar**. The button launches the existing macro. The integration preserves
 a workspace backup. Start CorelDRAW after installation.
-
-The setup EXE is **not digitally signed**.
 
 ### Option B — inspect or install manually
 
@@ -87,8 +84,6 @@ not been verified. The installer targets the default 2018 workspace.
 The button and icon have been verified locally across restarts;
 installation on a second clean machine and uninstall behavior have not
 been fully validated.
-
-The downloadable setup EXE is not digitally signed.
 
 ## Earlier milestones
 
