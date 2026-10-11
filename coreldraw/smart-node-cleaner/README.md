@@ -10,6 +10,11 @@ USTA tests proposed node removals against the original curve using a
 two-way sampled deviation check. It removes nodes only when the sampled
 deviation is within the tolerance you choose.
 
+## How it differs from CorelDRAW's Reduce Nodes
+
+The built-in command is useful for quick cleanup. USTA is for cases where you want to **set a deviation tolerance** and compare each proposed deletion to the original geometry instead of applying an unspecified amount of smoothing. The trade-off is speed: repeated candidate testing can be slow on complex curves.
+
+
 ## Get started
 
 ### Option A — Windows installer (recommended)
