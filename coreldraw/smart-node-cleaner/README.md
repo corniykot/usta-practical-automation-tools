@@ -96,11 +96,10 @@ The historical [v0.1](Usta_Smart_Node_Cleaner_v0_1.bas) and
 [v0.3](Usta_Smart_Node_Cleaner_v0_3_FAST.bas) are retained, along with a
 [v0.3 result image](smart-node-cleaner-v0.3-result.png).
 
-## License and contact
+## Contact
 
-MIT License — see the [repository license](../../LICENSE).
+If this tool saves you time, I'd love to hear what kind of artwork you threw at it. If it misbehaves, send the CorelDRAW version, node counts, tolerance, attempt limit, and—if possible—a sample curve. Misbehaving Bézier curves deserve a fair trial, after all.
 
-Problems or ideas? [Open an issue](https://github.com/corniykot/usta-practical-automation-tools/issues)
-or email **usta.scripts@gmail.com**.
+Bug reports, better ideas, or another production task that has been wasting your afternoons: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
 
 *Less time negotiating with Bézier.*
