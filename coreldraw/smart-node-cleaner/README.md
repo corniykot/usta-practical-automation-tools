@@ -10,6 +10,22 @@ Unlike a generic smoothing command, USTA tests each proposed node removal agains
 
 The built-in command is useful for quick cleanup. USTA is for cases where you want to **set a deviation tolerance** and compare each proposed deletion to the original geometry instead of applying an unspecified amount of smoothing. The trade-off is speed: repeated candidate testing can be slow on complex curves.
 
+## Smart Node Cleaner v0.73 in action
+
+**Precision and workload controls**
+
+![USTA Smart Node Cleaner v0.73 interface with adjustable Bézier curve deviation and workload presets](usta-smart-node-cleaner-v0.73-interface.png)
+
+**Processing a complex lettering curve**
+
+![CorelDRAW ornamental lettering and USTA Smart Node Cleaner high-workload confirmation](usta-smart-node-cleaner-v0.73-processing-warning.png)
+
+**Node reduction result — 324 to 142 nodes**
+
+![CorelDRAW lettering after USTA Smart Node Cleaner: 182 Bézier nodes removed, from 324 to 142, at 1 mm sampled tolerance](usta-smart-node-cleaner-v0.73-node-reduction-result.png)
+
+This example removed **182 of 324 nodes** from a decorative lettering curve using a **1 mm sampled tolerance**. Results depend on the geometry and settings.
+
 ## Problems it solves
 
 - **Too many nodes after bitmap tracing or PowerTRACE?** Clean up dense curves that are difficult to select, edit, or reshape manually.
