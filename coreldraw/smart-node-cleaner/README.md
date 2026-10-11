@@ -17,6 +17,15 @@ The built-in command is useful for quick cleanup. USTA is for cases where you wa
 - **Imported SVG or PDF has messy vector paths?** Simplify the nodes of an individual selected Curve object before further editing or production.
 - **Preparing artwork for laser cutting, engraving, vinyl cutting, or plotting?** Reduce unnecessary path complexity while keeping control of contour changes. This tool does **not** repair open paths, merge disconnected objects, or optimize cutting order.
 - **Cleaning converted text or detailed outlines?** Work one curve at a time, inspect the result, and undo if necessary.
+- **Exporting a traced logo or illustration as SVG for a website?** Reduce excessive Bézier nodes in CorelDRAW before export to make the vector paths simpler. Fewer path segments can also reduce the exported SVG's path data, depending on the artwork and export settings.
+
+## SVG cleanup for web and UI design
+
+A traced logo, complex SVG icon, or decorative web illustration can contain far more anchor points than its visible shape needs. That makes the vector harder to edit and can produce unnecessarily complex SVG `path` data.
+
+**USTA simplifies the geometry before SVG export from CorelDRAW.** Use it to reduce excessive nodes in a selected curve while controlling the measured deviation from the original outline. Then export to SVG and, if needed, run an SVG optimizer such as [SVGO](https://github.com/svg/svgo) to clean up markup, metadata, and coordinate precision.
+
+**Geometry cleanup and SVG code optimization are different jobs.** USTA does not edit SVG markup, minify XML, or guarantee a specific reduction in file size or faster page loading. It is most useful when the source artwork contains genuinely redundant curve nodes, especially after bitmap tracing.
 
 ## Quick answers
 
@@ -25,6 +34,8 @@ The built-in command is useful for quick cleanup. USTA is for cases where you wa
 **How is it different from CorelDRAW Reduce Nodes?** CorelDRAW provides built-in node reduction and a curve smoothness control; USTA explicitly evaluates proposed removals against the unchanged original curve with a tolerance expressed in millimeters.
 
 **Will it preserve the exact original shape?** It limits the deviation measured by its sampling method; it does not mathematically prove zero deviation or guarantee unchanged geometry everywhere.
+
+**Does USTA help prepare SVG files for websites?** Yes, if you are editing complex vector artwork in CorelDRAW before SVG export. It reduces redundant Bézier nodes in the source geometry; a separate SVG optimizer can handle code-level cleanup afterward.
 
 **Does it work on all objects or CorelDRAW versions?** It processes one selected Curve object at a time and has been tested in CorelDRAW 2018 (64-bit). Other versions have not been verified.
 
