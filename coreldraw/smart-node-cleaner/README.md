@@ -8,8 +8,7 @@ laser/CNC/plotter preparation.
 
 USTA tests proposed node removals against the original curve using a
 two-way sampled deviation check. It removes nodes only when the sampled
-deviation is within the tolerance you choose. This is **not** an exact
-geometric Hausdorff guarantee.
+deviation is within the tolerance you choose.
 
 ## Get started
 
