@@ -1,6 +1,8 @@
-# Lightweight Image Aspect Ratio Sorter — A4, Square, Other
+# Sort Images by Aspect Ratio — A4, Square, Other
 
-A small **no-install PowerShell image sorter** for quickly organizing large production folders by aspect ratio.
+> Türkçe sürüm / Turkish version: [README](./sort-images-by-aspect-ratio-tr/README.md)
+
+A lightweight **no-install PowerShell script** for sorting large image folders by aspect ratio.
 
 Drop one `.ps1` file into the folder, run it once, and get three automatically created groups:
 
@@ -142,4 +144,4 @@ At the end it reports totals for each category, copied files, existing files, an
 
 ## Contact
 
-If “I’ll sort these by eye” means opening a folder with **400 images** and slowly reconsidering your life choices, write to us before image 237. Send the next repetitive production step to [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com) — it may deserve a script too.
+If “I’ll just sort these by eye” keeps turning into **hours of folder archaeology**, that probably belongs in a script too. Send us the next repetitive production step: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
