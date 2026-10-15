@@ -4,21 +4,10 @@ param(
 
 Add-Type -AssemblyName System.Drawing
 
-# Default source folder: Desktop\картон
-# Build the Cyrillic folder name from Unicode code points so the script
-# remains safe when opened in older Windows PowerShell versions.
+# Default source folder: Desktop\Artwork
 if ([string]::IsNullOrWhiteSpace($Source)) {
-    $folderName = -join (
-        0x043A, # к
-        0x0430, # а
-        0x0440, # р
-        0x0442, # т
-        0x043E, # о
-        0x043D  # н
-    | ForEach-Object { [char]$_ })
-
     $desktop = [Environment]::GetFolderPath("Desktop")
-    $Source = Join-Path $desktop $folderName
+    $Source = Join-Path $desktop "Artwork"
 }
 
 if (-not (Test-Path -LiteralPath $Source -PathType Container)) {
