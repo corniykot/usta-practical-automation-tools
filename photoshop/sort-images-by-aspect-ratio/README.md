@@ -1,12 +1,14 @@
-# PNG Aspect Ratio Sorter — A4, Square, Other
+# Image Aspect Ratio Sorter — A4, Square, Other
 
 A small **PowerShell image sorting utility** for production folders.
 
-It scans PNG files, reads their pixel dimensions, calculates the aspect ratio, and copies each image into one of three automatically created folders:
+It scans supported image files, reads their pixel dimensions, calculates the aspect ratio, and copies each image into one of three automatically created folders:
 
 - `A4` — A4 or A4-like proportions
 - `Square` — square or effectively square images
 - `Other` — everything that does not match the first two groups
+
+Supported formats: **JPG, JPEG, PNG, BMP, GIF, TIF, TIFF**.
 
 The original files are **never moved, renamed, modified, or deleted**.
 
@@ -30,11 +32,11 @@ First, use it to separate portrait/A4-like artwork from square and unusual propo
 - [A7-style — 72 × 102 mm](../place-layout-a7-72x102/)
 - [64 × 94 mm — 3 × 3 on A4](../place-layout-64x94/)
 
-The sorter does **not** decide which final print size you need. It only performs the first proportion check so obviously incompatible source files can be separated before batch layout.
+The sorter does **not** decide which final print size you need. It only separates obviously different proportions before batch layout.
 
 ## Classification rules
 
-The script always compares the **short side to the long side**, so portrait and landscape orientation are treated identically.
+The script compares the **short side to the long side**, so portrait and landscape orientation are treated identically.
 
 ### Square
 
@@ -44,43 +46,24 @@ An image is classified as square when:
 short side / long side >= 0.99
 ```
 
-Examples:
-
-- 1000 × 1000 → Square
-- 1000 × 995 → Square
-
 ### A4-like
 
-True A4 has the ratio:
-
-```text
-210 / 297 = 0.7071
-```
-
-The sorter uses a deliberately broad **±10% tolerance**:
-
-```text
-approximately 0.6364 – 0.7778
-```
-
-This is intended for production triage rather than strict ISO paper validation.
+A4 proportion with **±10% tolerance**.
 
 ### Other
 
-Anything that is neither square nor inside the A4-like range goes into `Other`.
-
-The `Other` folder can then be reviewed separately and split into additional format groups if needed.
+Anything that is neither square nor A4-like goes into `Other`.
 
 ## Safety
 
 The script is non-destructive:
 
-- source PNG files remain untouched
+- source images remain untouched
 - files are copied, not moved
 - output folders are created automatically
 - existing copies are not overwritten
 - rerunning the script is safe
-- only PNG files directly inside the source folder are scanned
+- only supported image files directly inside the source folder are scanned
 
 ## Working folder
 
@@ -99,12 +82,12 @@ No absolute path is hard-coded.
 You can still point the script to another folder explicitly:
 
 ```powershell
-.\Sort_PNG_By_Aspect_Ratio.ps1 -Source ".\Incoming"
+.\Sort_Images_By_Aspect_Ratio.ps1 -Source ".\Incoming"
 ```
 
 ## How to run
 
-1. Put `Sort_PNG_By_Aspect_Ratio.ps1` in the folder containing the PNG files you want to sort.
+1. Put `Sort_Images_By_Aspect_Ratio.ps1` in the folder containing the images you want to sort.
 2. Open that folder in **File Explorer**.
 3. Click the address bar, type:
 
@@ -112,14 +95,14 @@ You can still point the script to another folder explicitly:
 powershell
 ```
 
-4. Press **Enter**. PowerShell opens directly in that folder.
-5. Run the script with the relative path:
+4. Press **Enter**.
+5. Run:
 
 ```powershell
-.\Sort_PNG_By_Aspect_Ratio.ps1
+.\Sort_Images_By_Aspect_Ratio.ps1
 ```
 
-6. Wait for the classification report, then review the new `A4`, `Square`, and `Other` subfolders.
+6. Review the new `A4`, `Square`, and `Other` folders.
 
 If PowerShell blocks local scripts, allow them for the current session only:
 
@@ -127,7 +110,7 @@ If PowerShell blocks local scripts, allow them for the current session only:
 Set-ExecutionPolicy -Scope Process Bypass
 ```
 
-Then run `.\Sort_PNG_By_Aspect_Ratio.ps1` again.
+Then run the script again.
 
 ## Output
 
@@ -138,25 +121,13 @@ For every image, the console shows:
 - calculated aspect ratio
 - assigned category
 
-At the end it reports totals for:
-
-- A4-like images
-- square images
-- other images
-- newly copied files
-- files that already existed
-- read errors
+At the end it reports totals for each category, copied files, existing files, and read errors.
 
 ## Requirements
 
 - Windows PowerShell or PowerShell on Windows
 - `System.Drawing`
-- PNG source images
 
-## File
+## Contact
 
-`Sort_PNG_By_Aspect_Ratio.ps1`
-
-## Search terms
-
-PowerShell image sorter, sort images by aspect ratio, sort PNG by dimensions, A4 image sorter, square image sorter, batch image organization, image aspect ratio script, prepress image sorting, Photoshop production workflow.
+If “I’ll just sort these by eye” keeps turning into twenty minutes of folder archaeology, that probably belongs in a script too. Send us the next repetitive production step: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
