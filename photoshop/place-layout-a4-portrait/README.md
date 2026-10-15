@@ -1,6 +1,6 @@
 # Place Layout A4 Portrait
 
-> Turkish version: [README](./place-layout-a4-portrait-tr/README.md)
+> Türkçe sürüm / Turkish version: [README](./place-layout-a4-portrait-tr/README.md)
 
 Automatically places every supported image from a folder into an active Photoshop document as a Smart Object, corrects sideways source orientation, resizes each image to exactly **210 × 297 mm**, and aligns it to the A4 canvas.
 
