@@ -41,4 +41,4 @@ Hatasız çalışmada gereksiz TXT log oluşturulmaz. Bir dosya atlanırsa hata 
 
 ## İletişim
 
-Bir klasördeki A4 görselleri hâlâ tek tek sürükleyip hizalıyorsanız Photoshop sizi fazla uslu bulmuş olabilir: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
+Bu script bir klasörü kurtarıyor. Photoshop başka bir klasörde size hâlâ aynı işi tek tek yaptırıyorsa, bize haber verin: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
