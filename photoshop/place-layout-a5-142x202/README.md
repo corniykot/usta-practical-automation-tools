@@ -1,6 +1,6 @@
 # Photoshop A5 Print Layout Script — 142×202 mm on A4
 
-> Turkish version: [README](./place-layout-a5-142x202-tr/README.md)
+> Türkçe sürüm / Turkish version: [README](./place-layout-a5-142x202-tr/README.md)
 
 A free **Photoshop JSX / ExtendScript** for automatically building an exact-size A5-style print layout from a folder of images.
 
