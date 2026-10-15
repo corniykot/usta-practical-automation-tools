@@ -87,4 +87,4 @@ Script:
 
 ## İletişim
 
-Photoshop size aynı White kanalını 200. kez hazırlatıyorsa, Kanallar paneliyle tartışmaya başlamadan önce bize yazın: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
+White kanalı yine tasarımın kenarından taşıp kendi kafasına göre takılıyorsa, delilleri bize gönderin: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
