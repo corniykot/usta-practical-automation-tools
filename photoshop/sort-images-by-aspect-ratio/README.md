@@ -1,8 +1,8 @@
-# Image Aspect Ratio Sorter — A4, Square, Other
+# Lightweight Image Aspect Ratio Sorter — A4, Square, Other
 
-A small **PowerShell image sorting utility** for production folders.
+A small **no-install PowerShell image sorter** for quickly organizing large production folders by aspect ratio.
 
-It scans supported image files, reads their pixel dimensions, calculates the aspect ratio, and copies each image into one of three automatically created folders:
+Drop one `.ps1` file into the folder, run it once, and get three automatically created groups:
 
 - `A4` — A4 or A4-like proportions
 - `Square` — square or effectively square images
@@ -14,11 +14,23 @@ The original files are **never moved, renamed, modified, or deleted**.
 
 ## Why this exists
 
-Large artwork folders often contain a mix of portrait images, squares, 2:3 files, 3:4 files, panoramas, and other proportions.
+Large artwork folders can contain hundreds of mixed images: portraits, squares, 2:3 files, 3:4 files, panoramas, and other proportions.
 
-For print preparation, it is useful to separate the obvious groups first and inspect the remaining formats as a second step.
+Before print layout, it is faster to separate the obvious groups automatically than inspect every file by hand.
 
-This script performs that first-pass sorting automatically.
+This script performs that first-pass sorting in one run.
+
+## No installation required
+
+This is a lightweight **single-file PowerShell utility**.
+
+- no Photoshop required for the sorting step
+- no third-party image organizer required
+- no installer
+- no permanent setup
+- run it directly in the working folder and remove the script afterward if you no longer need it
+
+It uses Windows PowerShell and `System.Drawing` to read image dimensions.
 
 ## Part of the print-layout workflow
 
@@ -130,4 +142,4 @@ At the end it reports totals for each category, copied files, existing files, an
 
 ## Contact
 
-If “I’ll just sort these by eye” keeps turning into twenty minutes of folder archaeology, that probably belongs in a script too. Send us the next repetitive production step: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
+If “I’ll sort these by eye” means opening a folder with **400 images** and slowly reconsidering your life choices, write to us before image 237. Send the next repetitive production step to [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com) — it may deserve a script too.
