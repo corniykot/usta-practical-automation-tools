@@ -18,6 +18,20 @@ For print preparation, it is useful to separate the obvious groups first and ins
 
 This script performs that first-pass sorting automatically.
 
+## Part of the print-layout workflow
+
+This sorter is intended as a **preparation step before the Photoshop placement scripts** in this repository.
+
+First, use it to separate portrait/A4-like artwork from square and unusual proportions. Then send the prepared images into the appropriate production layout:
+
+- [A4 portrait — 210 × 297 mm](../place-layout-a4-portrait/)
+- [A5-style — 142 × 202 mm](../place-layout-a5-142x202/)
+- [A6-style — 102 × 142 mm](../place-layout-a6-102x142/)
+- [A7-style — 72 × 102 mm](../place-layout-a7-72x102/)
+- [64 × 94 mm — 3 × 3 on A4](../place-layout-64x94/)
+
+The sorter does **not** decide which final print size you need. It only performs the first proportion check so obviously incompatible source files can be separated before batch layout.
+
 ## Classification rules
 
 The script always compares the **short side to the long side**, so portrait and landscape orientation are treated identically.
