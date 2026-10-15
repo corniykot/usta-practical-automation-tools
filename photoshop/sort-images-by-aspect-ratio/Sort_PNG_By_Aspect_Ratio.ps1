@@ -4,10 +4,9 @@ param(
 
 Add-Type -AssemblyName System.Drawing
 
-# Default source folder: Desktop\Artwork
+# By default, process the folder where PowerShell was opened.
 if ([string]::IsNullOrWhiteSpace($Source)) {
-    $desktop = [Environment]::GetFolderPath("Desktop")
-    $Source = Join-Path $desktop "Artwork"
+    $Source = (Get-Location).Path
 }
 
 if (-not (Test-Path -LiteralPath $Source -PathType Container)) {
