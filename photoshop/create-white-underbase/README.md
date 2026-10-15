@@ -1,6 +1,6 @@
 # Photoshop White Underbase — Spot White Channel with Choke
 
-> Turkish version: [README](./create-white-underbase-tr/README.md)
+> Türkçe sürüm / Turkish version: [README](./create-white-underbase-tr/README.md)
 
 Create a **white ink underbase in Photoshop** without rebuilding the separation by hand.
 
