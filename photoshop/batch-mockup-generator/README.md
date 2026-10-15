@@ -1,5 +1,7 @@
 # Photoshop Batch Mockup Generator — Smart Object Replacement & Bulk Export
 
+> Turkish version: [README](./batch-mockup-generator-tr/README.md)
+
 Generate multiple Photoshop mockups from a folder of designs without replacing the Smart Object by hand every single time.
 
 **Batch Mockup Generator** takes an open PSD mockup, finds its Smart Object layers, lets you choose the design target, and processes a folder of PNG, JPEG, TIFF or PSD artwork automatically.
