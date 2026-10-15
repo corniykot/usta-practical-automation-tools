@@ -1,5 +1,7 @@
 # Photoshop — Place Layout 64×94 (3×3)
 
+> Turkish version: [README](./place-layout-64x94-tr/README.md)
+
 Automatically places images from a folder onto an **A4 portrait** document, checks orientation, resizes each image to exactly **64 × 94 mm**, and arranges them **9 per sheet (3 × 3)**.
 
 Each set of 9 images is merged into one Photoshop layer. A final incomplete set is merged as well.
