@@ -87,6 +87,4 @@ Script:
 
 ## İletişim
 
-Sorular, hata bildirimleri veya benzer Photoshop otomasyonları için:
-
-[**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
+Photoshop size aynı White kanalını 200. kez hazırlatıyorsa, Kanallar paneliyle tartışmaya başlamadan önce bize yazın: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
