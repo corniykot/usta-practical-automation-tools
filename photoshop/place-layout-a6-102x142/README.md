@@ -1,6 +1,6 @@
 # Photoshop Batch Print Layout — 4 Images on A4, 102×142 mm
 
-> Turkish version: [README](./place-layout-a6-102x142-tr/README.md)
+> Türkçe sürüm / Turkish version: [README](./place-layout-a6-102x142-tr/README.md)
 
 A free **Photoshop JSX / ExtendScript** for turning a folder of images into a repeatable **4-up A4 print layout**.
 
