@@ -47,4 +47,4 @@ Hatasız çalışmada TXT log oluşturulmaz. Bir dosya atlanırsa hata kaydı sc
 
 ## İletişim
 
-Dört görseli A4'e dizmek hâlâ küçük bir Photoshop Tetris'ine dönüşüyorsa, sıradaki hangi yerleşimi otomatikleştirmemiz gerektiğini bize anlatın: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
+Bu script dört görseli yerleştiriyor. Photoshop'ta hâlâ aynı ölçüyü, aynı konumu veya aynı tıklamayı tekrar tekrar yapıyorsanız, o işi bize tarif edin — belki sıradaki script odur: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
