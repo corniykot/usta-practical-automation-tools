@@ -68,36 +68,52 @@ The script is non-destructive:
 - rerunning the script is safe
 - only PNG files directly inside the source folder are scanned
 
-## Default folder
+## Working folder
 
-By default the script uses an English-named source folder:
+By default, the script processes the **current folder** — the folder where PowerShell was opened.
 
-```text
-Desktop\Artwork
-```
-
-and creates:
+It creates three subfolders there:
 
 ```text
-Desktop\Artwork\A4
-Desktop\Artwork\Square
-Desktop\Artwork\Other
+.\A4
+.\Square
+.\Other
 ```
 
-You can also run it against another folder:
+No absolute path is hard-coded.
+
+You can still point the script to another folder explicitly:
 
 ```powershell
-.\Sort_PNG_By_Aspect_Ratio.ps1 -Source "D:\Artwork\Incoming"
+.\Sort_PNG_By_Aspect_Ratio.ps1 -Source ".\Incoming"
 ```
 
 ## How to run
 
-1. Open PowerShell.
-2. Run the script, or right-click it and choose **Run with PowerShell**.
-3. Wait for the classification report.
-4. Review the three generated folders.
+1. Put `Sort_PNG_By_Aspect_Ratio.ps1` in the folder containing the PNG files you want to sort.
+2. Open that folder in **File Explorer**.
+3. Click the address bar, type:
 
-If PowerShell blocks local scripts, you can run it for the current session with an appropriate execution-policy setting used in your environment.
+```text
+powershell
+```
+
+4. Press **Enter**. PowerShell opens directly in that folder.
+5. Run the script with the relative path:
+
+```powershell
+.\Sort_PNG_By_Aspect_Ratio.ps1
+```
+
+6. Wait for the classification report, then review the new `A4`, `Square`, and `Other` subfolders.
+
+If PowerShell blocks local scripts, allow them for the current session only:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+```
+
+Then run `.\Sort_PNG_By_Aspect_Ratio.ps1` again.
 
 ## Output
 
