@@ -67,4 +67,4 @@ Built to remove a repetitive Photoshop prepress step while keeping the operator 
 
 ## Contact
 
-Questions, feedback, bug reports, or suspiciously repetitive Photoshop work: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
+If Photoshop makes you build the same White channel for the 200th time, tell us before you start arguing with the Channels panel: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
