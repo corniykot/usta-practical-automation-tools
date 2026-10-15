@@ -1,6 +1,6 @@
 # Photoshop Print Automation — Print All Layers Separately
 
-> Turkish version: [README](./print-all-layers-tr/README.md)
+> Türkçe sürüm / Turkish version: [README](./print-all-layers-tr/README.md)
 
 A small Photoshop script for a very repetitive job: **print every top-level layer separately without clicking Print over and over again**.
 
