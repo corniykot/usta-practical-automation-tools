@@ -1,5 +1,7 @@
 # Photoshop A7 Batch Print Layout — 8 Images on A4, 72×102 mm
 
+> Turkish version: [README](./place-layout-a7-72x102-tr/README.md)
+
 A free **Photoshop JSX / ExtendScript** workflow for automatically preparing small-format images for print.
 
 Select a folder and the layout script places different images at exactly **72 × 102 mm**, arranges **8 images on each A4 sheet**, and merges every completed sheet into a single Photoshop layer ready for printing.
