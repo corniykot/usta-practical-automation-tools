@@ -48,4 +48,4 @@ Hatasız çalışmada TXT log oluşturulmaz. Bir dosya atlanırsa hata kaydı sc
 
 ## İletişim
 
-İki resmi A4'e yerleştirmek için hâlâ cetvel, hesap makinesi ve sabır üçlüsünü kullanıyorsanız bunu burada bırakabilirsiniz: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
+Cetvel, hesap makinesi ve sabır üçlüsünden kurtulduk. Photoshop size hâlâ başka bir işi gereksiz yere elle yaptırıyorsa bize anlatın: [**usta.scripts@gmail.com**](mailto:usta.scripts@gmail.com)
