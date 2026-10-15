@@ -70,18 +70,18 @@ The script is non-destructive:
 
 ## Default folder
 
-By default the script uses:
+By default the script uses an English-named source folder:
 
 ```text
-Desktop\картон
+Desktop\Artwork
 ```
 
 and creates:
 
 ```text
-Desktop\картон\A4
-Desktop\картон\Square
-Desktop\картон\Other
+Desktop\Artwork\A4
+Desktop\Artwork\Square
+Desktop\Artwork\Other
 ```
 
 You can also run it against another folder:
