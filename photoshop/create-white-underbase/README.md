@@ -1,5 +1,7 @@
 # Photoshop White Underbase — Spot White Channel with Choke
 
+> Turkish version: [README](./create-white-underbase-tr/README.md)
+
 Create a **white ink underbase in Photoshop** without rebuilding the separation by hand.
 
 This free JSX script turns artwork into a real **White spot channel**, applies an optional **choke**, and leaves the original artwork untouched. It is made for raster prepress jobs where white ink needs to sit under color on dark, transparent, metallic, or otherwise non-white media.
