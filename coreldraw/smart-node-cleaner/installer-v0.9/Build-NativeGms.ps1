@@ -11,6 +11,7 @@ param(
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
+Import-Module (Join-Path $PSHOME 'Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop
 $app=$null;$project=$null;$ownsHost=$false;$loaded=$false
 $transcript=$false
 function Normalize-Code([string]$Code) {
