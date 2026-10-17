@@ -39,6 +39,7 @@ var
   TargetPage: TInputOptionWizardPage;
   TargetIni, DiagnosticDir: String;
   TargetCount: Integer;
+  NativeFailed: Boolean;
 
 function PowerShellPath(): String;
 begin
@@ -136,11 +137,26 @@ var Code: Integer;
     Params: String;
 begin
   if CurStep <> ssPostInstall then Exit;
+  NativeFailed := True;
   WizardForm.StatusLabel.Caption := 'Building the macro in your CorelDRAW VBA environment...';
   Params := ParametersFor('Install', ExpandConstant('{app}'), 'native-install.log');
   Log('Native GMS build and integration: ' + Params);
   if not Exec(PowerShellPath(), Params, '', SW_HIDE, ewWaitUntilTerminated, Code) then
     RaiseException('Could not start native installation: ' + SysErrorMessage(Code));
   if Code <> 0 then RaiseException('Native GMS installation failed. Existing macro/workspaces preserved or rolled back. Diagnostics: ' + DiagnosticDir);
+  NativeFailed := False;
   Log('Native installation completed: ' + DiagnosticDir);
+end;
+
+function GetCustomSetupExitCode(): Integer;
+begin
+  if NativeFailed then Result := 1 else Result := 0;
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  if (CurPageID = wpFinished) and NativeFailed then begin
+    WizardForm.FinishedHeadingLabel.Caption := 'Native macro installation failed';
+    WizardForm.FinishedLabel.Caption := 'The macro and toolbar installation did not complete. Existing macro/workspaces were preserved or rolled back. Diagnostics: ' + DiagnosticDir;
+  end;
 end;
