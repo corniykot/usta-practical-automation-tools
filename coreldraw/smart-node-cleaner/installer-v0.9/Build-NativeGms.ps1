@@ -60,6 +60,12 @@ try {
         $ownsHost=$true
     }
     if([int]$app.VersionMajor -ne $ExpectedMajor){throw 'COM activation returned the wrong CorelDRAW version.'}
+    # Match the proven native VBE workflow. A freshly activated invisible host
+    # may expose GMSManager before its VBA editor has been initialized.
+    $app.Visible=$true
+    $editor=$app.VBE
+    $editor.MainWindow.Visible=$true
+    Write-Output ('Native VBA initialized; projects='+$editor.VBProjects.Count)
     $actualGmsPath=[string]$app.GMSManager.UserGMSPath
     Write-Output ('Native host version: '+$app.VersionMajor+'; UserGMSPath: '+$actualGmsPath)
     foreach($existing in $app.GMSManager.Projects){
