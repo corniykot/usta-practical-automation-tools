@@ -64,6 +64,7 @@ var I, Code, Preferred: Integer;
 begin
   DiagnosticDir := ExpandConstant('{localappdata}\Usta.Scripts\SmartNodeCleaner\Logs\') +
     GetDateTimeString('yyyymmdd-hhnnss', '-', ':') + '-' + ExtractFileName(ExpandConstant('{tmp}'));
+  DiagnosticDir := ExpandConstant('{param:DIAGNOSTICDIR|' + DiagnosticDir + '}');
   if not ForceDirectories(DiagnosticDir) then RaiseException('Cannot create diagnostics: ' + DiagnosticDir);
   TargetIni := DiagnosticDir + '\targets.ini';
   ExtractTemporaryFile('Get-CorelTargets.ps1');
@@ -123,7 +124,10 @@ begin
   Log('Native installation preflight: ' + Params);
   if not Exec(PowerShellPath(), Params, '', SW_HIDE, ewWaitUntilTerminated, Code) then
     Result := 'Could not start installation preflight: ' + SysErrorMessage(Code)
-  else if Code <> 0 then Result := 'Preflight failed. Close CorelDRAW and inspect: ' + DiagnosticDir + '\preflight.log';
+  else if Code <> 0 then begin
+    Log('Preflight PowerShell exit code: ' + IntToStr(Code));
+    Result := 'Preflight failed (exit ' + IntToStr(Code) + '). Inspect: ' + DiagnosticDir + '\preflight.log';
+  end;
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
