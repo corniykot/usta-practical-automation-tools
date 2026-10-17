@@ -63,7 +63,9 @@ try {
     # Match the proven native VBE workflow. A freshly activated invisible host
     # may expose GMSManager before its VBA editor has been initialized.
     $app.Visible=$true
+    if(!$app.InitializeVBA()){throw 'CorelDRAW could not initialize its installed VBA editor. No trust/security setting will be changed.'}
     $editor=$app.VBE
+    if(!$editor){throw 'CorelDRAW returned no VBA editor after InitializeVBA.'}
     $editor.MainWindow.Visible=$true
     Write-Output ('Native VBA initialized; projects='+$editor.VBProjects.Count)
     $actualGmsPath=[string]$app.GMSManager.UserGMSPath
