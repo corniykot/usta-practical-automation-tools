@@ -73,8 +73,13 @@ try {
         function Q([string]$Value){return '"'+$Value+'"'}
         $arguments='-NoProfile -NonInteractive -STA -ExecutionPolicy Bypass -File '+(Q (Join-Path $SourceDir 'Build-NativeGms.ps1'))+' -ProgId '+$ProgId+' -ExpectedMajor '+$ExpectedMajor+' -SourceDir '+(Q $SourceDir)+' -OutputGms '+(Q $sourceGms)+' -ResultPath '+(Q $resultFile)
         if($oldNativeHash){$arguments += ' -ExistingOwnedGms '+(Q $nativeDestination)}
-        $psi=[Diagnostics.ProcessStartInfo]::new((Join-Path $PSHOME 'powershell.exe'),$arguments)
+        # Inno may start us through Sysnative; do not reuse a redirected alias or
+        # inherit the setup process's current directory for the native builder.
+        $powershellExe=Join-Path ([Environment]::GetFolderPath('System')) 'WindowsPowerShell\v1.0\powershell.exe'
+        $psi=[Diagnostics.ProcessStartInfo]::new($powershellExe,$arguments)
         $psi.UseShellExecute=$false;$psi.CreateNoWindow=$true
+        $psi.WorkingDirectory=$SourceDir
+        Write-Output ('Builder executable='+$psi.FileName+'; working directory='+$psi.WorkingDirectory)
         $child=[Diagnostics.Process]::Start($psi)
         if(!$child.WaitForExit(180000)){$child.Kill();throw ('Native build timed out. No workspace changed. Inspect: '+$resultFile+'.log')}
         if($child.ExitCode -ne 0){throw ('Native build failed. No workspace changed. Inspect: '+$resultFile+'.log')}
