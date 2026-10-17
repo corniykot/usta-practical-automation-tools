@@ -122,7 +122,10 @@ try {
     $engineActual=$module.CodeModule.Lines(1,$module.CodeModule.CountOfLines)
     $formActual=$formComponent.CodeModule.Lines(1,$formComponent.CodeModule.CountOfLines)
     if((Normalize-Code $engineActual) -cne (Normalize-Code $engine) -or (Normalize-Code $formActual) -cne (Normalize-Code $form)){throw 'Reloaded VBA source does not match the supplied sources.'}
-    if($formComponent.Properties.Item('BorderStyle').Value -ne 0){throw 'Reloaded form design property mismatch.'}
+    # A reloaded UserForm exposes its designer lazily. Properties can be null
+    # until Designer is materialized; verify the actual native form object.
+    $reloadedDesigner=$formComponent.Designer
+    if(!$reloadedDesigner -or $reloadedDesigner.BorderStyle -ne 0){throw 'Reloaded form design property mismatch.'}
     foreach($reference in $vb.References){if($reference.IsBroken){throw ('Broken reference after reload: '+$reference.Name)}}
     # Capture the final on-disk hash only after the host has released the project.
     Save-NativeProject
