@@ -1,58 +1,64 @@
-# USTA Smart Node Cleaner v0.73 — Windows installer
+# USTA Smart Node Cleaner v0.9 — native-source installer
 
-This installer packages the already existing `UstaSmartNodeCleaner.gms` and icon.
-It integrates a toolbar button using the tested workspace patcher `Add-UstaToolbarButton.ps1`.
-The VBA engine and UserForm sources are not modified by this project.
+This folder is the local successor to the working 2018 installer. Build
+`USTA-Smart-Node-Cleaner.iss` (which includes the v0.9 script) with Inno Setup 6.3+.
+No precompiled GMS is included in the v0.9 EXE.
 
-CorelDRAW 2018 (64-bit) must have been launched at least once to create its default
-workspace. **Close CorelDRAW before installation.** The integration script refuses to
-change the workspace while CorelDRAW is running.
+## Installation
 
-On installation, Inno Setup copies the GMS, ICO, and PowerShell helper to the current
-user's CorelDRAW 2018 Draw/GMS directory. It invokes the helper using the **installed**
-ICO path, not the developer's Downloads folder. The helper operates on the target
-user's default workspace and puts one USTA icon at the end of the Standard toolbar.
-It creates a uniquely named workspace backup beside the .cdws file.
+Use the Windows account that runs CorelDRAW. Start the licensed CorelDRAW once to
+initialize its profile and VBA, then close every CorelDRAW window. Run
+`USTA-Smart-Node-Cleaner-v0.9-Setup.exe` and select the detected version. No manual
+source import or interface customization is required by the installation code.
+For unattended setup with several versions installed, specify
+`/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TARGETMAJOR=20` (replace 20 with the
+detected **internal major version**, not a marketing year).
 
-The installer invokes `Invoke-UstaToolbarIntegration.ps1` in fresh 64-bit Windows
-PowerShell 5.1. This adapter explicitly loads both `System.IO.Compression` and
-`System.IO.Compression.FileSystem`, then calls the original integration script
-without modifying it. This fixes the reproduced `Unable to find type
-[IO.Compression.ZipArchiveMode]` / exit-code-1 failure. Independently running the
-helper in an already initialized PowerShell session can hide that missing assembly.
+The installer detects registered 64-bit CorelDRAW executables and matches their
+file version against saved workspace metadata. It opens its own version-specific
+COM host, creates a native project, adds Module1 from the BAS and a native blank
+UserForm with the supplied form code, checks references, compiles, saves and reloads.
+This specific UserForm creates all controls and layout at runtime; code-only text
+is not treated as a general replacement for a designer `.frm/.frx` export.
 
-Before copying files, setup validates the workspace and rejects a running CorelDRAW
-process. The helper checks again immediately before patching. An existing GMS is
-preserved rather than overwritten, and uninstall never removes the GMS. The three
-original payload files remain unchanged in source. Setup does not reset workspaces
-or change macro security settings.
+The native `UstaSmartNodeCleanerV09.gms` is installed in the GMS folder confirmed by
+the selected host. The original v0.73 GMS and other macros are not overwritten.
+The same USTA button identity is appended to the end of compatible saved Standard
+toolbars, with a separator and the original embedded ICO. Existing commands retain
+their order; toolbar visibility is not forced. Incomplete workspace deltas are
+left unchanged rather than reconstructed or reset. Each replaced workspace has a
+unique `.usta-v09-*.bak` backup.
 
-Diagnostics are stored under `%LOCALAPPDATA%\USTA\Smart Node Cleaner\Logs\<run>\`:
-`preflight.log` and `integration.log` include PowerShell version/bitness, resolved
-paths, the result and full exception details. Inno Setup also enables its own log;
-use `/LOG="C:\path\setup.log"` to choose a location. The failure message identifies
-the integration log path. Install as the Windows user who runs CorelDRAW.
+The engine is the existing v0.73 algorithm. Only the form title/subtitle identify
+v0.9 and remove the fixed 2018 label; control positions, colors, handlers and
+algorithm behavior are preserved.
 
-To target a different saved workspace, run:
+## Requirements and limits
 
-```text
-USTA-Smart-Node-Cleaner-v0.73-Setup.exe /WORKSPACE="C:\path\custom-workspace.cdws"
-```
+- Windows x64, initialized CorelDRAW x64, installed VBA/MSForms and permission to
+  access the VBA project model. Restricted/expired editions may not provide this.
+- The installer never changes macro trust, Windows security or licensing settings.
+  It retains the previous installer's process-only PowerShell execution-policy
+  argument; no persistent execution policy is written. Mandatory system policy wins.
+- Native compilation/save uses the VBE host commands. Missing commands, broken
+  references or blocked automation stop installation with diagnostics.
+- CorelDRAW 2018 source-to-native-GMS GUI build/reload and simple-curve function
+  were tested. CorelDRAW 2020 here shows Trial Expired with Script Editor/Run Script
+  disabled; native build/function there remain BLOCKED, not verified compatible.
+- The attempted v0.9 EXE test was blocked by Windows Application Control before
+  setup started. The final rebuilt EXE has **not** completed an end-to-end install.
+  Do not describe it as production-verified or universally compatible.
+- No security bypass, new runtime installation, commits or publication were done.
 
-The default paths use the target user's AppData directories. No developer profile
-path is compiled into the installer. The selected workspace must already exist.
-The Actions build runs `Test-InstallerIntegration.ps1`, which reproduces the old
-fresh-process failure and checks the adapter, logs, order, icon and repeat behavior.
-These archive tests do not substitute for testing the EXE with CorelDRAW installed.
+Diagnostics: `%LOCALAPPDATA%\Usta.Scripts\SmartNodeCleaner\Logs\<run>\`.
+Native build result includes host major, resolved GMS path, source/artifact hashes,
+reference paths and compile/reload checks. Setup accepts `/LOG="C:\path\setup.log"`.
 
-Build with GitHub Actions `.github/workflows/build-usta-installer.yml` and download
-the resulting workflow artifact. **Unsigned:** a GitHub-hosted build is not a digital
-signature and does not guarantee that Microsoft SmartScreen will trust the EXE.
-No code-signing credentials or service are configured.
+As in the previous installer, uninstall removes installer support files, while
+the installed macro and embedded toolbar button remain usable. For rollback use
+the per-file backups; restoring a whole workspace also restores its earlier user
+customization, so do not restore over later changes blindly.
 
-**Limitations before public release:** Test on a second clean CorelDRAW 2018
-installation, including an existing GMS, customized workspace, repeat install,
-restart and uninstall. The current integration targets the default workspace only.
-Removing the program files does not reverse the toolbar customization; reverting
-the workspace requires restoring a backup, which also reverts any subsequent
-workspace changes. Never distribute another user's workspace backup.
+Only the native v0.9 scripts, sources, ICO and build instructions belong in the
+transfer/source archive. Legacy 2018 helper/test files retained in this working
+folder are reference material and are not shipped or invoked by the v0.9 EXE.

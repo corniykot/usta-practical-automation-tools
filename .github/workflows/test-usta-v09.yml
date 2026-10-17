@@ -1,0 +1,54 @@
+name: USTA v0.9 native installer test
+on:
+  push:
+    branches: [test/usta-v09-native]
+    paths:
+      - coreldraw/smart-node-cleaner/installer-v0.9/**
+      - .github/workflows/test-usta-v09.yml
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: coreldraw/smart-node-cleaner/installer-v0.9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check PowerShell syntax
+        run: |
+          Get-ChildItem *.ps1 | ForEach-Object {
+            $tokens=$null; $errors=$null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$tokens,[ref]$errors)
+            if($errors.Count){ throw ($errors | Out-String) }
+          }
+      - name: Test workspace integration in Windows PowerShell 5.1
+        shell: powershell
+        run: ./Test-NativeInstaller.ps1 -TestRoot ./ci-evidence
+      - name: Find Inno Setup
+        run: |
+          $compiler="${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if(!(Test-Path $compiler)){
+            choco install innosetup --yes --no-progress
+            if($LASTEXITCODE){throw "Inno Setup installation failed"}
+          }
+          if(!(Test-Path $compiler)){throw "Inno Setup 6 compiler missing"}
+          "ISCC=$compiler" >> $env:GITHUB_ENV
+      - name: Build existing native-source installer
+        run: |
+          & $env:ISCC USTA-Smart-Node-Cleaner.iss
+          if($LASTEXITCODE){throw "Inno compilation failed"}
+          $exe=Get-Item output/USTA-Smart-Node-Cleaner-v0.9-Setup.exe
+          Get-FileHash $exe.FullName | Format-List | Out-File output/SHA256.txt
+          @("Commit: $env:GITHUB_SHA","Runner: $env:RUNNER_OS","Unsigned test build. No CorelDRAW application test runs on this runner.") | Set-Content output/BUILD.txt
+      - name: Upload test installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: USTA-Smart-Node-Cleaner-v0.9-test
+          path: |
+            coreldraw/smart-node-cleaner/installer-v0.9/output/*
+            coreldraw/smart-node-cleaner/installer-v0.9/ci-evidence/results.json
+          if-no-files-found: error
+          retention-days: 7
