@@ -23,7 +23,14 @@ try {
     Write-Output ('Executable='+$ExePath+'; Major='+$ExpectedMajor+'; GMS='+$GmsPath+'; Workspaces='+$WorkspaceFolder)
     Add-Type -AssemblyName System.IO.Compression
     Add-Type -AssemblyName System.IO.Compression.FileSystem
-    if(Get-Process -Name CorelDRW -ErrorAction SilentlyContinue){throw 'Close CorelDRAW before installation. No process will be terminated automatically.'}
+    $runningCorel=@(Get-Process -Name CorelDRW -ErrorAction SilentlyContinue)
+    Write-Output ('CorelDRAW process count: '+$runningCorel.Count)
+    foreach($process in $runningCorel){
+        $details=[ordered]@{PID=$process.Id;Name=$process.ProcessName;SessionId=$process.SessionId;HasExited=$process.HasExited;Responding=$process.Responding;WindowTitle=$process.MainWindowTitle;WindowHandle=$process.MainWindowHandle.ToInt64()}
+        try {$details.Path=$process.Path;$details.StartTimeUTC=$process.StartTime.ToUniversalTime().ToString('o')} catch {$details.QueryError=$_.Exception.Message}
+        Write-Output ('Active CorelDRAW: '+($details | ConvertTo-Json -Compress))
+    }
+    if($runningCorel.Count){throw 'Close CorelDRAW before installation. See PID/path/session/window diagnostics above. No process will be terminated automatically.'}
     if(!(Test-Path -LiteralPath $ExePath -PathType Leaf) -or [Diagnostics.FileVersionInfo]::GetVersionInfo($ExePath).FileMajorPart -ne $ExpectedMajor){throw 'Detected CorelDRAW executable/version no longer matches.'}
     $WorkspaceFolder=(Resolve-Path -LiteralPath $WorkspaceFolder).Path
     $draw=[IO.Path]::GetDirectoryName($WorkspaceFolder)
