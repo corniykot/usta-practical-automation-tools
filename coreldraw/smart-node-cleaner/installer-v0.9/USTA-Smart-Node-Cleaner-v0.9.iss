@@ -64,7 +64,8 @@ var I, Code, Preferred: Integer;
 begin
   DiagnosticDir := ExpandConstant('{localappdata}\Usta.Scripts\SmartNodeCleaner\Logs\') +
     GetDateTimeString('yyyymmdd-hhnnss', '-', ':') + '-' + ExtractFileName(ExpandConstant('{tmp}'));
-  DiagnosticDir := ExpandConstant('{param:DIAGNOSTICDIR|' + DiagnosticDir + '}');
+  Requested := ExpandConstant('{param:DIAGNOSTICDIR|}');
+  if Requested <> '' then DiagnosticDir := Requested;
   if not ForceDirectories(DiagnosticDir) then RaiseException('Cannot create diagnostics: ' + DiagnosticDir);
   TargetIni := DiagnosticDir + '\targets.ini';
   ExtractTemporaryFile('Get-CorelTargets.ps1');
