@@ -51,4 +51,9 @@ Final version-label verification and Windows PowerShell 5.1 regression: 2026-10-
 
 ## Installer wrapper regression, 2026-10-18
 
+Startup hotfix: InitializeWizard uses WizardDirValue rather than expanding the
+not-yet-initialized app constant. The workflow now executes the actual setup EXE
+on the CorelDRAW-free runner and requires the expected no-profile discovery result
+with no runtime/internal error. This checks startup, not a full installation.
+
 Windows PowerShell 5.1: 123 existing assertions plus 10 setup integration assertions passed. Additional checks prove preflight does not install GMS or change workspaces, edited GMS blocks UninstallAll before another target is removed, and successful UninstallAll removes two tracked target integrations without registry discovery. Inno uninstall uses Abort at usUninstall to preserve support/state if integration cleanup fails, as documented by Inno Setup. EXE compilation is performed by GitHub Actions. End-to-end EXE installation, Windows Apps listing and Inno uninstallation are UNTESTED until actually executed.

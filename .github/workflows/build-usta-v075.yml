@@ -47,6 +47,28 @@ jobs:
           @("Version: 0.75","Commit: $env:GITHUB_SHA","Runner: Windows 2022","Unsigned test build. CorelDRAW installation/uninstall EXE UI not exercised on this runner.") | Set-Content (Join-Path $output 'BUILD.txt') -Encoding UTF8
           Copy-Item (Join-Path $env:RUNNER_TEMP 'usta075-tests\results.json') $output
           Copy-Item (Join-Path $env:RUNNER_TEMP 'usta075-tests\setup-results.json') $output
+      - name: Test actual setup startup
+        run: |
+          $ErrorActionPreference='Stop'
+          $output=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.75\output'
+          $exe=Join-Path $output 'USTA-Smart-Node-Cleaner-v0.75-Setup.exe'
+          $log=Join-Path $output 'startup-smoke.log'
+          $arguments='/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG="'+$log+'"'
+          $process=Start-Process -FilePath $exe -ArgumentList $arguments -PassThru
+          if(!$process.WaitForExit(60000)) {
+            $process.Kill()
+            throw 'Setup startup did not terminate on the CorelDRAW-free runner'
+          }
+          if(!(Test-Path $log)){throw 'Setup startup did not produce its log'}
+          $text=Get-Content $log -Raw
+          if($text -match 'before it was initialized|Runtime error|Internal error') {
+            throw 'Setup runtime initialization failed'
+          }
+          if($text -notmatch 'No initialized CorelDRAW X7-2022 x64 profile found') {
+            throw 'Setup did not reach the expected CorelDRAW discovery result'
+          }
+          if($process.ExitCode -eq 0){throw 'Setup incorrectly succeeded without CorelDRAW'}
+          "PASS: actual EXE started and reached CorelDRAW detection; expected no-target exit $($process.ExitCode)." | Set-Content (Join-Path $output 'STARTUP-TEST.txt') -Encoding UTF8
       - uses: actions/upload-artifact@v4
         with:
           name: USTA-Smart-Node-Cleaner-v0.75-Setup

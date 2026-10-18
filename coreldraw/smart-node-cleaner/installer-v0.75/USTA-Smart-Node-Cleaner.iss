@@ -76,7 +76,9 @@ procedure InitializeWizard();
 var Params, Requested: String;
     Count, I, Code, Preferred: Integer;
 begin
-  LogDirectory := ExpandConstant('{app}\Logs');
+  ; {app} is not initialized in InitializeWizard. WizardDirValue returns the
+  ; default/command-line destination safely at this stage.
+  LogDirectory := AddBackslash(WizardDirValue) + 'Logs';
   if not ForceDirectories(LogDirectory) then RaiseException('Cannot create diagnostics: ' + LogDirectory);
   TargetIni := LogDirectory + '\targets.ini';
   ExtractTemporaryFile('Get-CorelTargets.ps1');
@@ -86,7 +88,11 @@ begin
     RaiseException('Cannot start CorelDRAW discovery: ' + SysErrorMessage(Code));
   if Code <> 0 then RaiseException('CorelDRAW discovery failed. See the setup log.');
   Count := StrToIntDef(GetIniString('Targets', 'Count', '0', TargetIni), 0);
-  if Count = 0 then RaiseException('No initialized CorelDRAW X7-2022 x64 profile found. Start your CorelDRAW once, close it, and retry.');
+  if Count = 0 then begin
+    Log('No initialized CorelDRAW X7-2022 x64 profile found.');
+    SuppressibleMsgBox('No initialized CorelDRAW X7-2022 x64 profile found. Start your CorelDRAW once, close it, and retry.', mbError, MB_OK, IDOK);
+    Abort;
+  end;
   TargetPage := CreateInputOptionPage(wpWelcome, 'Select CorelDRAW',
     'Install Smart Node Cleaner v0.75 for this version',
     'Close all CorelDRAW windows before continuing. VBA must be available in the selected version.', True, False);
