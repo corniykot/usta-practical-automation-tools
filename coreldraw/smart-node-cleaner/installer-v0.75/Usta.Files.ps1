@@ -27,7 +27,7 @@ function Remove-UstaButton([string]$InputPath,[string]$OutputPath,[bool]$RemoveS
     if($check.SelectSingleNode("//*[@guidRef='$script:Button' or @guid='$script:Button']")){throw 'Button removal verification failed'}
 }
 function Invoke-UstaFiles {
-    param([ValidateSet('Install','Uninstall')][string]$Mode,[string]$Profile,[int]$Major,[string]$Source,[string]$State,[switch]$ReplaceExistingGms)
+    param([ValidateSet('Install','Uninstall')][string]$Mode,[string]$Profile,[int]$Major,[string]$Source,[string]$State,[switch]$ReplaceExistingGms,[switch]$CheckOnly)
     if($Major -lt 17 -or $Major -gt 24){throw 'Supported internal versions: 17 through 24'}
     if(Get-Process CorelDRW -ErrorAction SilentlyContinue){throw 'Close CorelDRAW first; no process will be terminated.'}
     $Profile=[IO.Path]::GetFullPath($Profile);$State=[IO.Path]::GetFullPath($State)
@@ -78,6 +78,7 @@ function Invoke-UstaFiles {
                 $changes+=[pscustomobject]@{Path=$file.FullName;Backup=$before;Stage=$stage;BeforeHash=(Get-FileHash -LiteralPath $before).Hash}
             }
         }
+        if($CheckOnly){return [pscustomobject]@{Status='PASS';Mode='Check';Major=$Major;Profile=$Profile;ChangedWorkspaces=0;PreparedWorkspaces=$changes.Count;Evidence=$run}}
         if(Get-Process CorelDRW -ErrorAction SilentlyContinue){throw 'CorelDRAW started; no changes committed'}
         foreach($c in $changes){if((Get-FileHash -LiteralPath $c.Path).Hash -ne $c.BeforeHash){throw 'Workspace changed during preparation'}}
         if($hadGms -and (Get-FileHash -LiteralPath $gms).Hash -ne (Get-FileHash -LiteralPath $oldGms).Hash){throw 'GMS changed during preparation'}

@@ -1,7 +1,7 @@
 # Local verification — 0.75 integration prototype
 
 Date: 2026-10-17. Windows x64; Windows PowerShell 5.1 and PowerShell 7.
-No setup EXE built. GitHub source commit is authorized; no setup EXE or GitHub Release is produced.
+Initial local testing was performed without an EXE. GitHub source commit is authorized; no setup EXE or GitHub Release is produced.
 
 | Check | Result | Evidence |
 |---|---|---|
@@ -16,7 +16,7 @@ No setup EXE built. GitHub source commit is authorized; no setup EXE or GitHub R
 | Real local removal | PASS | GMS, button and unused embedded icon removed; five original Standard command sequences retained exactly by GUID |
 | CorelDRAW 2020 VBA function | BLOCKED | Existing expired trial; no licensing/security changes attempted |
 | Other target-version application tests, complex contours, 32-bit | UNTESTED | Not installed/operational locally or outside current test scope |
-| Windows Installed Apps registration/uninstall | NOT IMPLEMENTED | Explicitly no installer at this stage; testing is direct PowerShell only |
+| Windows Installed Apps registration/uninstall | UNTESTED | Inno Setup now implements registration and guarded removal; the EXE UI is not exercised by file tests |
 
 Local machine evidence in the task workspace:
 
@@ -48,3 +48,7 @@ CorelDRAW version requires an application test; registry detection is not proof.
 The saved GMS now displays 0.75 in its caption and subtitle, without a fixed CorelDRAW year. Its public entry point and the integration binding use V075. Extracted VBA was compared against the previously tested engine: differences are version labels, the matching entry-point name and native VB_Base class metadata only. Algorithm, layout and handlers are unchanged. The saved form was launched in CorelDRAW 2018 and displayed 0.75. See form-version-075.png and version-label-verification.json in the existing local evidence directory. File/workspace regression tests are rerun against this new payload before committing. No renewed multi-version application compatibility claim is made.
 
 Final version-label verification and Windows PowerShell 5.1 regression: 2026-10-18. All 123 assertions passed with the GMS 0.75 payload. Evidence included under evidence/: file-tests.json, vba-source-verification.json and form-0.75.png. No setup EXE or Release created.
+
+## Installer wrapper regression, 2026-10-18
+
+Windows PowerShell 5.1: 123 existing assertions plus 10 setup integration assertions passed. Additional checks prove preflight does not install GMS or change workspaces, edited GMS blocks UninstallAll before another target is removed, and successful UninstallAll removes two tracked target integrations without registry discovery. Inno uninstall uses Abort at usUninstall to preserve support/state if integration cleanup fails, as documented by Inno Setup. EXE compilation is performed by GitHub Actions. End-to-end EXE installation, Windows Apps listing and Inno uninstallation are UNTESTED until actually executed.

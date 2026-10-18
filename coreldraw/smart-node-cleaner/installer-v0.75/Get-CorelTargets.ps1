@@ -1,6 +1,6 @@
 # USTA Smart Node Cleaner v0.75
 [CmdletBinding()]
-param([string]$OutputJson)
+param([string]$OutputJson,[string]$OutputIni)
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 
@@ -68,5 +68,10 @@ foreach($p in $profiles.Values | Sort-Object Major -Descending) {
     }
 }
 $result=ConvertTo-Json -InputObject @($targets) -Depth 5
+if($OutputIni){
+    $lines=[Collections.Generic.List[string]]::new();$lines.Add('[Targets]');$lines.Add('Count='+$targets.Count);$index=0
+    foreach($target in $targets){$lines.Add('[Target'+$index+']');foreach($property in $target.PSObject.Properties){$lines.Add($property.Name+'='+$property.Value)};$index++}
+    [IO.File]::WriteAllLines([IO.Path]::GetFullPath($OutputIni),$lines,[Text.Encoding]::Unicode)
+}
 if($OutputJson){[IO.File]::WriteAllText([IO.Path]::GetFullPath($OutputJson),[string]$result,[Text.UTF8Encoding]::new($false))}
 $result
