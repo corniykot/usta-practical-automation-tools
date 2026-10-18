@@ -76,8 +76,7 @@ procedure InitializeWizard();
 var Params, Requested: String;
     Count, I, Code, Preferred: Integer;
 begin
-  ; {app} is not initialized in InitializeWizard. WizardDirValue returns the
-  ; default/command-line destination safely at this stage.
+  // The app constant is not initialized here. Use the current default directory.
   LogDirectory := AddBackslash(WizardDirValue) + 'Logs';
   if not ForceDirectories(LogDirectory) then RaiseException('Cannot create diagnostics: ' + LogDirectory);
   TargetIni := LogDirectory + '\targets.ini';
