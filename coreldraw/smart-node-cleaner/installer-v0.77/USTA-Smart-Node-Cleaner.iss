@@ -44,8 +44,8 @@ Source: "Usta.Files.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Add-UstaToolbarButton.ps1"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "Get-RunningCorel.ps1"; Flags: dontcopy
-Source: "ui\welcome.bmp"; Flags: dontcopy
-Source: "ui\header.bmp"; Flags: dontcopy
+Source: "ui\welcome.png"; Flags: dontcopy
+Source: "ui\header.png"; Flags: dontcopy
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -200,6 +200,7 @@ begin
   if UstaPanel=nil then Exit;
   UstaPageID := CurPageID;
   WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False; WizardForm.CancelButton.Visible := False;
+  WizardForm.Bevel.Visible := False;
 #ifdef UI_PREVIEW
   Preview := ExpandConstant('{param:PREVIEW|welcome}');
   if Preview='target' then UstaRender(1)

@@ -7,6 +7,7 @@ var
   UstaPanel: TPanel;
   UstaArt, UstaBanner: TBitmapImage;
   UstaBrand, UstaProduct, UstaHeading, UstaDescription, UstaBody, UstaDetail: TLabel;
+  UstaWarning: TLabel;
   UstaNext, UstaBack, UstaCancel: TBitmapButton;
   UstaRows: array of TBitmapButton;
   UstaIcons: array of TBitmapImage;
@@ -19,6 +20,8 @@ function DwmSetWindowAttribute(Wnd: HWND; Attribute: Integer; var Value: Integer
   external 'DwmSetWindowAttribute@dwmapi.dll stdcall delayload';
 function UstaSendMessage(Wnd: HWND; Msg, WParam, LParam: Longint): Longint;
   external 'SendMessageW@user32.dll stdcall';
+function UstaSetWindowTheme(Wnd: HWND; AppName, PartList: String): Integer;
+  external 'SetWindowTheme@uxtheme.dll stdcall';
 
 procedure UstaBounds(Control: TControl; X,Y,W,H: Integer);
 begin
@@ -83,6 +86,7 @@ begin
     B.OnClick := @UstaRowClick;
   end;
   C.Font.Name := 'Segoe UI'; C.Font.Size := 14; C.Font.Color := clWhite;
+  C.Brush.Color := UstaBackground;
   CY := (B.Height-C.TextHeight(Text)) div 2; C.TextOut(ScaleX(48),CY,Text);
   N := GetArrayLength(UstaRows); SetArrayLength(UstaRows,N+1); UstaRows[N] := B;
   if (IconPath <> '') and FileExists(IconPath) then begin
@@ -120,8 +124,12 @@ begin
   UstaBanner.Visible := not UstaArt.Visible;
   UstaBody.Caption := ''; UstaDetail.Caption := ''; UstaDescription.Caption := '';
   UstaProgress.Visible := Mode=4;
+  UstaWarning.Visible := Mode=2;
   UstaBack.Visible := Mode=1; UstaCancel.Visible := (Mode<>4) and (Mode<>5);
   UstaNext.Visible := Mode<>4; UstaNext.Enabled := True;
+#ifdef UI_PREVIEW
+  UstaNext.Visible := True;
+#endif
   UstaBounds(UstaHeading,40,30,640,58); UstaBounds(UstaDescription,40,90,620,70);
   UstaBounds(UstaBody,40,200,640,220); UstaBounds(UstaDetail,40,438,640,72);
   UstaPaintButton(UstaBack,'< Back',False); UstaPaintButton(UstaCancel,'Cancel',False);
@@ -145,6 +153,7 @@ begin
       for I := 0 to Count-1 do UstaDrawRow(I,194+I*38,TargetPage.CheckListBox.Items[I],'',TargetPage.Values[I],True);
     end;
     2: begin
+      UstaBounds(UstaHeading,100,30,580,58);
       UstaHeading.Caption := 'CorelDRAW is running'; UstaHeading.Font.Color := UstaOrange;
       UstaDescription.Caption := 'Please close the following versions of CorelDRAW to continue installation:';
 #ifdef UI_PREVIEW
@@ -204,6 +213,7 @@ begin
       1: UstaRender(2);
       2: UstaRender(3);
       3: UstaRender(4);
+      4: UstaRender(5);
       5: WizardForm.Close;
     end;
 #else
@@ -249,24 +259,30 @@ begin
   UstaPanel := TPanel.Create(WizardForm); UstaPanel.Parent := WizardForm;
   UstaPanel.SetBounds(0,0,WizardForm.ClientWidth,WizardForm.ClientHeight);
   UstaPanel.BevelOuter := bvNone; UstaPanel.Color := UstaBackground;
-  ExtractTemporaryFile('welcome.bmp'); ExtractTemporaryFile('header.bmp');
+  ExtractTemporaryFile('welcome.png'); ExtractTemporaryFile('header.png');
   UstaArt := TBitmapImage.Create(WizardForm); UstaArt.Parent := UstaPanel;
   UstaBounds(UstaArt,0,0,264,620); UstaArt.Stretch := True;
-  UstaArt.Bitmap.LoadFromFile(ExpandConstant('{tmp}\welcome.bmp'));
+  UstaArt.PngImage.LoadFromFile(ExpandConstant('{tmp}\welcome.png'));
   UstaBanner := TBitmapImage.Create(WizardForm); UstaBanner.Parent := UstaPanel;
   UstaBounds(UstaBanner,0,0,720,180); UstaBanner.Stretch := True;
-  UstaBanner.Bitmap.LoadFromFile(ExpandConstant('{tmp}\header.bmp'));
+  UstaBanner.PngImage.LoadFromFile(ExpandConstant('{tmp}\header.png'));
   UstaBrand := UstaLabel(28,35,224,82,48,True); UstaBrand.Caption := 'USTA'; UstaBrand.Font.Color := UstaOrange;
   UstaProduct := UstaLabel(28,123,224,44,14,False); UstaProduct.Caption := 'SMART NODE CLEANER';
   UstaHeading := UstaLabel(40,30,640,58,23,True);
+  UstaWarning := UstaLabel(40,19,58,64,36,True);
+  UstaWarning.Caption := #$26A0; UstaWarning.Font.Name := 'Segoe UI Symbol'; UstaWarning.Font.Color := UstaOrange;
   UstaDescription := UstaLabel(40,90,620,70,13,False); UstaDescription.Font.Color := UstaMuted;
   UstaBody := UstaLabel(40,200,640,220,14,False);
   UstaDetail := UstaLabel(40,438,640,72,12,False); UstaDetail.Font.Color := UstaMuted;
   UstaProgress := TNewProgressBar.Create(WizardForm); UstaProgress.Parent := UstaPanel;
   UstaBounds(UstaProgress,40,450,640,16); UstaProgress.Min := 0; UstaProgress.Max := 100;
+  UstaSetWindowTheme(UstaProgress.Handle,'','');
+  UstaSendMessage(UstaProgress.Handle,$0409,0,UstaOrange);
+  UstaSendMessage(UstaProgress.Handle,$2001,0,UstaBackground);
   UstaBack := UstaButton(202,@UstaBackClick); UstaNext := UstaButton(366,@UstaNextClick);
   UstaCancel := UstaButton(530,@UstaCancelClick);
   WizardForm.OuterNotebook.Visible := False;
+  WizardForm.Bevel.Visible := False;
   WizardForm.NextButton.Default := False; WizardForm.CancelButton.Cancel := False;
   WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False; WizardForm.CancelButton.Visible := False;
   UstaPanel.BringToFront;

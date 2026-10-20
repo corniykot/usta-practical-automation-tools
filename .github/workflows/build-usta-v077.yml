@@ -21,6 +21,10 @@ jobs:
         run: |
           $ErrorActionPreference='Stop'
           $dir=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77'
+          $assets=Get-Content (Join-Path $dir 'ui\assets-sha256.json') -Raw | ConvertFrom-Json
+          foreach($asset in $assets){
+            if((Get-FileHash (Join-Path $dir ('ui\'+$asset.Name))).Hash -ne $asset.Hash){throw ('UI resource hash mismatch: '+$asset.Name)}
+          }
           Get-ChildItem $dir -Filter *.ps1 | ForEach-Object {
             $tokens=$null; $errors=$null
             [void][Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$tokens,[ref]$errors)
@@ -32,9 +36,13 @@ jobs:
       - name: Compile setup EXE
         run: |
           $ErrorActionPreference='Stop'
-          $compiler=Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
-          choco upgrade innosetup --version=6.7.3 --yes --no-progress --allow-downgrade
-          if($LASTEXITCODE -ne 0){throw 'Inno Setup 6.7.3 preparation failed'}
+          $compilerDir=Join-Path $env:RUNNER_TEMP 'inno-6.7.3'
+          $installer=Join-Path $env:RUNNER_TEMP 'innosetup-6.7.3.exe'
+          Invoke-WebRequest 'https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe' -OutFile $installer
+          if((Get-FileHash $installer).Hash -ne '9C73C3BAE7ED48D44112A0F48E66742C00090BDB5BEF71D9D3C056C66E97B732'){throw 'Unexpected compiler package hash'}
+          $p=Start-Process $installer -ArgumentList ('/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="'+$compilerDir+'"') -WindowStyle Hidden -Wait -PassThru
+          if($p.ExitCode -ne 0){throw 'Inno Setup 6.7.3 preparation failed'}
+          $compiler=Join-Path $compilerDir 'ISCC.exe'
           if(!(Test-Path $compiler)){throw 'Inno Setup compiler unavailable'}
           $dir=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77'
           & $compiler (Join-Path $dir 'USTA-Smart-Node-Cleaner.iss')
