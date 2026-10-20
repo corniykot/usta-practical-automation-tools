@@ -1,0 +1,81 @@
+name: Build USTA Smart Node Cleaner v0.77
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'coreldraw/smart-node-cleaner/installer-v0.77/**'
+      - '.github/workflows/build-usta-v077.yml'
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate scripts and integration
+        run: |
+          $ErrorActionPreference='Stop'
+          $dir=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77'
+          Get-ChildItem $dir -Filter *.ps1 | ForEach-Object {
+            $tokens=$null; $errors=$null
+            [void][Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$tokens,[ref]$errors)
+            if($errors){throw ($errors | Out-String)}
+          }
+          & (Join-Path $dir 'Test-ToolbarPlacement.ps1') -BaselineWorkspace (Join-Path $dir 'evidence\toolbar-baseline.cdws') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-toolbar-tests')
+          & (Join-Path $dir 'Test-OleDecimalLocales.ps1') -OutputPath (Join-Path $env:RUNNER_TEMP 'usta077-decimals.json')
+          & (Join-Path $dir 'Test-SetupIntegration.ps1') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-tests')
+      - name: Compile setup EXE
+        run: |
+          $ErrorActionPreference='Stop'
+          $compiler=Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
+          if(!(Test-Path $compiler)) {
+            choco install innosetup --yes --no-progress
+            if($LASTEXITCODE -ne 0){throw 'Inno Setup installation failed'}
+          }
+          if(!(Test-Path $compiler)){throw 'Inno Setup compiler unavailable'}
+          $dir=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77'
+          & $compiler (Join-Path $dir 'USTA-Smart-Node-Cleaner.iss')
+          if($LASTEXITCODE -ne 0){throw 'Installer compilation failed'}
+          $output=Join-Path $dir 'output'
+          $exe=Join-Path $output 'USTA-Smart-Node-Cleaner-v0.77-Setup.exe'
+          if(!(Test-Path $exe)){throw 'Setup EXE not produced'}
+          $hash=(Get-FileHash $exe -Algorithm SHA256).Hash
+          "$hash  USTA-Smart-Node-Cleaner-v0.77-Setup.exe" | Set-Content (Join-Path $output 'SHA256.txt') -Encoding ASCII
+          @("Version: 0.77","Commit: $env:GITHUB_SHA","Runner: Windows 2022","Unsigned test build. CorelDRAW installation/uninstall EXE UI not exercised on this runner.") | Set-Content (Join-Path $output 'BUILD.txt') -Encoding UTF8
+          Copy-Item (Join-Path $env:RUNNER_TEMP 'usta077-tests\results.json') $output
+          Copy-Item (Join-Path $env:RUNNER_TEMP 'usta077-tests\setup-results.json') $output
+          Copy-Item (Join-Path $env:RUNNER_TEMP 'usta077-toolbar-tests\results.json') (Join-Path $output 'toolbar-results.json')
+          Copy-Item (Join-Path $env:RUNNER_TEMP 'usta077-decimals.json') $output
+      - name: Test actual setup startup
+        run: |
+          $ErrorActionPreference='Stop'
+          $output=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77\output'
+          $exe=Join-Path $output 'USTA-Smart-Node-Cleaner-v0.77-Setup.exe'
+          $log=Join-Path $output 'startup-smoke.log'
+          $arguments='/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG="'+$log+'"'
+          $process=Start-Process -FilePath $exe -ArgumentList $arguments -WindowStyle Hidden -PassThru
+          if(!$process.WaitForExit(60000)) {
+            $process.Kill()
+            throw 'Setup startup did not terminate on the CorelDRAW-free runner'
+          }
+          if(!(Test-Path $log)){throw 'Setup startup did not produce its log'}
+          $text=Get-Content $log -Raw
+          if($text -match 'before it was initialized|Runtime error|Internal error') {
+            throw 'Setup runtime initialization failed'
+          }
+          if($text -notmatch 'No initialized CorelDRAW X7-2022 x64 profile found') {
+            throw 'Setup did not reach the expected CorelDRAW discovery result'
+          }
+          if($process.ExitCode -eq 0){throw 'Setup incorrectly succeeded without CorelDRAW'}
+          "PASS: actual EXE started and reached CorelDRAW detection; expected no-target exit $($process.ExitCode)." | Set-Content (Join-Path $output 'STARTUP-TEST.txt') -Encoding UTF8
+      - uses: actions/upload-artifact@v4
+        with:
+          name: USTA-Smart-Node-Cleaner-v0.77-Setup
+          path: coreldraw/smart-node-cleaner/installer-v0.77/output/*
+          if-no-files-found: error
+          retention-days: 14
