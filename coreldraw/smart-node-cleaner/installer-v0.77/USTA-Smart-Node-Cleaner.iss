@@ -159,8 +159,8 @@ var Code: Integer;
 begin
   if CurStep <> ssPostInstall then Exit;
   IntegrationFailed := True;
-  UstaBody.Caption := 'Installing the GMS macro and configuring the USTA toolbar button...';
-  UstaProgress.Style := npbstMarquee;
+  UstaBody.Caption := 'Files copied.'+#13#10+#13#10+'Installing the GMS macro and configuring the USTA toolbar button...';
+  UstaSetProgress(-1);
   UstaPanel.Repaint;
   WizardForm.StatusLabel.Caption := UstaBody.Caption;
   if not Exec(PowerShellPath(), IntegrationParameters('Install', ExpandConstant('{app}')),
@@ -168,7 +168,7 @@ begin
     RaiseException('Could not start integration: ' + SysErrorMessage(Code));
   if Code <> 0 then RaiseException('Macro integration failed. Inspect: ' + ExpandConstant('{app}\State'));
   IntegrationFailed := False;
-  UstaProgress.Style := npbstNormal; UstaProgress.Position := 100;
+  UstaSetProgress(100);
   UstaBody.Caption := 'Macro and toolbar integration completed.';
 end;
 
@@ -191,7 +191,7 @@ end;
 
 procedure CurInstallProgressChanged(CurProgress,MaxProgress: Integer);
 begin
-  if MaxProgress>0 then UstaProgress.Position := (CurProgress*100) div MaxProgress;
+  if MaxProgress>0 then UstaSetProgress((CurProgress*100) div MaxProgress);
 end;
 
 procedure CurPageChanged(CurPageID: Integer);
@@ -206,7 +206,7 @@ begin
   if Preview='target' then UstaRender(1)
   else if Preview='running' then UstaRender(2)
   else if Preview='ready' then UstaRender(3)
-  else if Preview='progress' then begin UstaRender(4); UstaProgress.Position := 65; end
+  else if Preview='progress' then begin UstaRender(4); UstaSetProgress(65); end
   else if Preview='finished' then UstaRender(5)
   else UstaRender(0);
 #else

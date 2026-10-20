@@ -11,7 +11,7 @@ var
   UstaNext, UstaBack, UstaCancel: TBitmapButton;
   UstaRows: array of TBitmapButton;
   UstaIcons: array of TBitmapImage;
-  UstaProgress: TNewProgressBar;
+  UstaProgress: TBitmapImage;
   UstaMode, UstaPageID: Integer;
   UstaRunningIni: String;
   UstaBusy: Boolean;
@@ -53,6 +53,20 @@ begin
 end;
 
 procedure UstaRender(Mode: Integer); forward;
+
+procedure UstaSetProgress(Value: Integer);
+var C: TCanvas; W,H,L,R: Integer;
+begin
+  W := UstaProgress.Width; H := UstaProgress.Height;
+  UstaProgress.Bitmap.Width := W; UstaProgress.Bitmap.Height := H;
+  C := UstaProgress.Bitmap.Canvas; C.Brush.Color := UstaBackground;
+  C.Pen.Color := $665543; C.RoundRect(0,0,W,H,H,H);
+  C.Brush.Color := UstaOrange; C.Pen.Color := UstaOrange;
+  if Value<0 then begin L := W div 3; R := (W*2) div 3; end
+  else begin L := 1; R := ((W-2)*Value) div 100; end;
+  if R>L then C.RoundRect(L,1,R,H-1,H-2,H-2);
+  UstaProgress.Invalidate;
+end;
 
 procedure UstaRowClick(Sender: TObject);
 var I, Selected: Integer;
@@ -180,6 +194,10 @@ begin
       UstaHeading.Caption := 'Installing';
       UstaDescription.Caption := 'Please wait while USTA Smart Node Cleaner is installed on your computer.';
       UstaBody.Caption := 'Copying files...';
+      UstaSetProgress(0);
+#ifdef UI_PREVIEW
+      UstaSetProgress(65);
+#endif
     end;
     5: begin
       if IntegrationFailed then begin
@@ -274,11 +292,8 @@ begin
   UstaDescription := UstaLabel(40,90,620,70,13,False); UstaDescription.Font.Color := UstaMuted;
   UstaBody := UstaLabel(40,200,640,220,14,False);
   UstaDetail := UstaLabel(40,438,640,72,12,False); UstaDetail.Font.Color := UstaMuted;
-  UstaProgress := TNewProgressBar.Create(WizardForm); UstaProgress.Parent := UstaPanel;
-  UstaBounds(UstaProgress,40,450,640,16); UstaProgress.Min := 0; UstaProgress.Max := 100;
-  UstaSetWindowTheme(UstaProgress.Handle,'','');
-  UstaSendMessage(UstaProgress.Handle,$0409,0,UstaOrange);
-  UstaSendMessage(UstaProgress.Handle,$2001,0,UstaBackground);
+  UstaProgress := TBitmapImage.Create(WizardForm); UstaProgress.Parent := UstaPanel;
+  UstaBounds(UstaProgress,40,450,640,16);
   UstaBack := UstaButton(202,@UstaBackClick); UstaNext := UstaButton(366,@UstaNextClick);
   UstaCancel := UstaButton(530,@UstaCancelClick);
   WizardForm.OuterNotebook.Visible := False;
