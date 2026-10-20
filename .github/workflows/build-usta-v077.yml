@@ -33,14 +33,14 @@ jobs:
         run: |
           $ErrorActionPreference='Stop'
           $compiler=Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
-          if(!(Test-Path $compiler)) {
-            choco install innosetup --yes --no-progress
-            if($LASTEXITCODE -ne 0){throw 'Inno Setup installation failed'}
-          }
+          choco upgrade innosetup --version=6.7.3 --yes --no-progress --allow-downgrade
+          if($LASTEXITCODE -ne 0){throw 'Inno Setup 6.7.3 preparation failed'}
           if(!(Test-Path $compiler)){throw 'Inno Setup compiler unavailable'}
           $dir=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77'
           & $compiler (Join-Path $dir 'USTA-Smart-Node-Cleaner.iss')
           if($LASTEXITCODE -ne 0){throw 'Installer compilation failed'}
+          & $compiler /DUI_PREVIEW (Join-Path $dir 'USTA-Smart-Node-Cleaner.iss')
+          if($LASTEXITCODE -ne 0){throw 'UI preview compilation failed'}
           $output=Join-Path $dir 'output'
           $exe=Join-Path $output 'USTA-Smart-Node-Cleaner-v0.77-Setup.exe'
           if(!(Test-Path $exe)){throw 'Setup EXE not produced'}
