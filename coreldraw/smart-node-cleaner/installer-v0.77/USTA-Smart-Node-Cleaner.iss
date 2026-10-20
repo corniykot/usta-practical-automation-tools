@@ -199,7 +199,7 @@ var Preview: String;
 begin
   if UstaPanel=nil then Exit;
   UstaPageID := CurPageID;
-  WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False; WizardForm.CancelButton.Visible := False;
+  WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False; WizardForm.CancelButton.Visible := True;
   WizardForm.Bevel.Visible := False;
 #ifdef UI_PREVIEW
   Preview := ExpandConstant('{param:PREVIEW|welcome}');
@@ -219,6 +219,13 @@ begin
     UstaRender(4); UstaHeading.Caption := 'Checking Installation';
     UstaBody.Caption := 'Checking the selected CorelDRAW workspace...';
   end;
+#endif
+end;
+
+procedure CancelButtonClick(CurPageID: Integer; var Cancel, Confirm: Boolean);
+begin
+#ifdef UI_PREVIEW
+  Confirm := False;
 #endif
 end;
 

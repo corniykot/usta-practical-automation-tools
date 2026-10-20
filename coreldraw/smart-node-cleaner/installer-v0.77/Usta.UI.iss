@@ -284,6 +284,9 @@ begin
   WizardForm.OuterNotebook.Visible := False;
   WizardForm.Bevel.Visible := False;
   WizardForm.NextButton.Default := False; WizardForm.CancelButton.Cancel := False;
-  WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False; WizardForm.CancelButton.Visible := False;
+  // Inno's close guard requires a focusable native Cancel button. Keep it alive
+  // behind our panel; hiding it would disable both Cancel and the title-bar X.
+  WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False;
+  WizardForm.CancelButton.Visible := True; WizardForm.CancelButton.TabStop := False;
   UstaPanel.BringToFront;
 end;
