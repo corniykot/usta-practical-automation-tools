@@ -157,12 +157,11 @@ begin
   case Mode of
     0: begin
       UstaHeading.Caption := 'Welcome to USTA Practical Automation Tools!';
-      UstaBody.Caption := 'This setup will install USTA Smart Node Cleaner on your computer.'+#13#10+#13#10+
+      UstaBody.Caption := 'This setup will install USTA Smart Node Cleaner v{#AppVersion} on your computer.'+#13#10+#13#10+
         'Please close CorelDRAW before continuing.';
     end;
     1: begin
       UstaHeading.Caption := 'Select CorelDRAW Version';
-      UstaDescription.Caption := 'Select the version of CorelDRAW to install USTA Smart Node Cleaner for.';
       Count := TargetPage.CheckListBox.Items.Count;
       for I := 0 to Count-1 do UstaDrawRow(I,194+I*38,TargetPage.CheckListBox.Items[I],'',TargetPage.Values[I],True);
     end;
@@ -185,7 +184,6 @@ begin
     end;
     3: begin
       UstaHeading.Caption := 'Ready to Install';
-      UstaDescription.Caption := 'Setup is ready to install USTA Smart Node Cleaner v0.77.';
       UstaBody.Caption := 'Selected version:'+#13#10+TargetPage.CheckListBox.Items[SelectedIndex()]+#13#10+#13#10+
         'The macro and USTA button will be installed for your Windows account.';
       UstaBack.Visible := True; UstaPaintButton(UstaNext,'Install',True);
