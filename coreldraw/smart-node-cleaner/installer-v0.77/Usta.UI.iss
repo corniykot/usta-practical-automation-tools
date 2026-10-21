@@ -135,7 +135,7 @@ begin
   UstaMode := Mode; UstaRowsClear();
   UstaArt.Visible := (Mode=0) or (Mode=5);
   UstaBrand.Visible := UstaArt.Visible; UstaProduct.Visible := UstaArt.Visible;
-  UstaCompactBanner.Visible := (Mode=1) or (Mode=3);
+  UstaCompactBanner.Visible := (Mode=1) or (Mode=2) or (Mode=3);
   UstaBanner.Visible := not UstaArt.Visible and not UstaCompactBanner.Visible;
   UstaHeading.AutoSize := False; UstaHeading.WordWrap := True;
   UstaBody.Caption := ''; UstaDetail.Caption := ''; UstaDescription.Caption := '';
@@ -169,16 +169,18 @@ begin
     end;
     2: begin
       UstaBounds(UstaHeading,100,30,580,58);
+      UstaBounds(UstaWarning,40,52,58,64);
       UstaHeading.Caption := 'CorelDRAW is running'; UstaHeading.Font.Color := UstaOrange;
+      UstaBounds(UstaDescription,40,200,640,50);
       UstaDescription.Caption := 'Please close the following versions of CorelDRAW to continue installation:';
 #ifdef UI_PREVIEW
-      UstaDrawRow(0,210,'CorelDRAW Graphics Suite 2020 (64-bit)','',False,False);
+      UstaDrawRow(0,256,'CorelDRAW Graphics Suite 2020 (64-bit)','',False,False);
 #else
       Count := StrToIntDef(GetIniString('Running','Count','0',UstaRunningIni),0);
       for I := 0 to Count-1 do begin
         Text := GetIniString('Process'+IntToStr(I),'Label','CorelDRAW',UstaRunningIni);
         IconPath := GetIniString('Process'+IntToStr(I),'Icon','',UstaRunningIni);
-        UstaDrawRow(I,200+I*42,Text,IconPath,False,False);
+        UstaDrawRow(I,256+I*42,Text,IconPath,False,False);
       end;
 #endif
       UstaDetail.Caption := 'Save your open documents and close CorelDRAW, then click Check Again.';
