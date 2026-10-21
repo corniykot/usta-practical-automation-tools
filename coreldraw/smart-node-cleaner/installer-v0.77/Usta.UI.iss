@@ -165,7 +165,7 @@ begin
     1: begin
       UstaHeading.Caption := 'Select CorelDRAW Version';
       Count := TargetPage.CheckListBox.Items.Count;
-      for I := 0 to Count-1 do UstaDrawRow(I,108+I*38,TargetPage.CheckListBox.Items[I],'',TargetPage.Values[I],True);
+      for I := 0 to Count-1 do UstaDrawRow(I,194+I*38,TargetPage.CheckListBox.Items[I],'',TargetPage.Values[I],True);
     end;
     2: begin
       UstaBounds(UstaHeading,100,30,580,58);
@@ -217,10 +217,10 @@ begin
     end;
   end;
   if UstaCompactBanner.Visible then begin
-    // Center the actual single-line text height, including font/DPI scaling.
+    // The banner stays 180 px high. Only its left text band is shorter:
+    // artwork y=56..112, with the single-line title centered at y=84.
     UstaHeading.WordWrap := False; UstaHeading.AutoSize := True;
-    UstaHeading.Top := (UstaCompactBanner.Height-UstaHeading.Height) div 2;
-    if Mode=3 then UstaBounds(UstaBody,40,110,640,220);
+    UstaHeading.Top := ScaleY(84)-(UstaHeading.Height div 2);
   end;
   if Mode<>2 then UstaHeading.Font.Color := clWhite;
   UstaPanel.Repaint;
@@ -284,7 +284,7 @@ begin
   UstaPanel.SetBounds(0,0,WizardForm.ClientWidth,WizardForm.ClientHeight);
   UstaPanel.BevelOuter := bvNone; UstaPanel.Color := UstaBackground;
   ExtractTemporaryFile('welcome.png'); ExtractTemporaryFile('header.png');
-  ExtractTemporaryFile('header-compact.png');
+  ExtractTemporaryFile('header-singleline.png');
   UstaArt := TBitmapImage.Create(WizardForm); UstaArt.Parent := UstaPanel;
   UstaBounds(UstaArt,0,0,264,620); UstaArt.Stretch := True;
   UstaArt.PngImage.LoadFromFile(ExpandConstant('{tmp}\welcome.png'));
@@ -292,8 +292,8 @@ begin
   UstaBounds(UstaBanner,0,0,720,180); UstaBanner.Stretch := True;
   UstaBanner.PngImage.LoadFromFile(ExpandConstant('{tmp}\header.png'));
   UstaCompactBanner := TBitmapImage.Create(WizardForm); UstaCompactBanner.Parent := UstaPanel;
-  UstaBounds(UstaCompactBanner,0,0,720,80); UstaCompactBanner.Stretch := True;
-  UstaCompactBanner.PngImage.LoadFromFile(ExpandConstant('{tmp}\header-compact.png'));
+  UstaBounds(UstaCompactBanner,0,0,720,180); UstaCompactBanner.Stretch := True;
+  UstaCompactBanner.PngImage.LoadFromFile(ExpandConstant('{tmp}\header-singleline.png'));
   UstaBrand := UstaLabel(28,35,224,82,48,True); UstaBrand.Caption := 'USTA'; UstaBrand.Font.Color := UstaOrange;
   UstaProduct := UstaLabel(28,123,224,44,14,False); UstaProduct.Caption := 'SMART NODE CLEANER';
   UstaHeading := UstaLabel(40,30,640,58,23,True);

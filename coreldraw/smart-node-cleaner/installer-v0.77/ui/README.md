@@ -33,6 +33,13 @@ transfer. They were replaced with complete compact PNGs; the workflow validates
 the asset SHA-256 manifest before compiling. This is why compilation alone is
 not considered visual proof.
 
+Single-line title pages retain the full 720 x 180 logical-pixel banner and the
+original content positions. `header-singleline.png` changes only the left text
+backing band to 56 logical pixels tall, centered at y=84. Its left artwork was
+edited using image generation; the original right-hand pixels (source x>=700)
+were restored verbatim and checked for equality. Do not substitute a cropped
+full-height banner: shortening the whole header was explicitly rejected.
+
 Central standards reviewed: Operating `2df9344ebf5227b185bf6446e99791b9a8294fe4`,
 Voice `8c3832131830f95257b4eb5fa53399ba2aec5aab`, Workflow
 `5af96d8255c11e5d1d212de18601bb026e3d5cf4`.
