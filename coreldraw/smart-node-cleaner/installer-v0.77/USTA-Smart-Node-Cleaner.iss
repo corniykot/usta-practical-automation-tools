@@ -46,6 +46,7 @@ Source: "Add-UstaToolbarButton.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Get-RunningCorel.ps1"; Flags: dontcopy
 Source: "ui\welcome.png"; Flags: dontcopy
 Source: "ui\header.png"; Flags: dontcopy
+Source: "ui\header-compact.png"; Flags: dontcopy
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
