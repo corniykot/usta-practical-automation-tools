@@ -1,44 +1,34 @@
-# USTA Smart Node Cleaner v0.77
+# USTA Smart Node Cleaner v0.77 — Installer & VBA Source
 
-Source code and resources for the Windows installer. It installs the included
-GMS and adds the USTA button to the existing CorelDRAW Standard toolbar.
+**[Download the Windows installer](https://github.com/corniykot/usta-practical-automation-tools/releases/tag/smart-node-cleaner-v0.77)** · [Product overview and screenshots](../README.md)
 
-| Files | Purpose |
+USTA Smart Node Cleaner is a free CorelDRAW Bézier node reduction macro with millimeter-based tolerance control. This folder contains the **Inno Setup project**, installation scripts, ready-to-install CorelDRAW VBA project and readable source.
+
+## v0.77 screenshots
+
+![USTA Smart Node Cleaner v0.77 screenshot](Screenshot%202026-10-21%20231707.png)
+
+![USTA Smart Node Cleaner v0.77 screenshot](Screenshot%202026-10-21%20231856.png)
+
+![USTA Smart Node Cleaner v0.77 screenshot](Screenshot%202026-10-22%20010534.png)
+
+## What's included?
+
+| File | Purpose |
 |---|---|
-| `USTA-Smart-Node-Cleaner.iss`, `Usta.UI.iss` | Inno Setup installation and English interface |
-| `Get-CorelTargets.ps1`, `Get-RunningCorel.ps1` | Version discovery and running-process diagnostics |
-| `Manage-Usta.ps1`, `Usta.Files.ps1`, `Add-UstaToolbarButton.ps1` | Installation, removal and workspace integration |
-| `vba/` | Readable VBA extracted from the included v0.77 GMS |
-| `UstaSmartNodeCleaner.gms` | Ready-to-install VBA project |
-| `Usta_Smart_Node_Cleaner.ico`, `ui/` | Toolbar icon, setup icon and required artwork |
+| `USTA-Smart-Node-Cleaner.iss`, `Usta.UI.iss` | Inno Setup installer and UI |
+| `Get-CorelTargets.ps1`, `Get-RunningCorel.ps1` | CorelDRAW discovery and process checks |
+| `Manage-Usta.ps1`, `Usta.Files.ps1`, `Add-UstaToolbarButton.ps1` | Installation, removal and Standard toolbar integration |
+| `UstaSmartNodeCleaner.gms` | Ready-to-install CorelDRAW VBA macro |
+| [`vba/`](vba/) | Readable VBA extracted from the included GMS |
+| [`ui/`](ui/) | Installer artwork and icons |
 
-The form's `.code.vba` file contains its VBA code, not a complete `.frm/.frx`
-designer export. Controls are created at runtime. The installer uses the ready
-GMS; the readable files are provided for code inspection, not automatic import.
-The GMS is unchanged: SHA-256
-`A98A01F9C6AF70032B13B5F621CD905819111EE50339A410A2966AE3756D6C99`.
+The GMS is included as a prebuilt VBA project. Its readable source is published for inspection, **not** rebuilt from source by CI. GMS SHA-256: `A98A01F9C6AF70032B13B5F621CD905819111EE50339A410A2966AE3756D6C99`.
 
-## Build and use
+## Build and compatibility
 
-Build with **Inno Setup 6.7.3**:
+The installer is built using **Inno Setup 6.7.3** (`ISCC.exe USTA-Smart-Node-Cleaner.iss`). [GitHub Actions](../../../.github/workflows/build-usta-v077.yml) builds and checks the EXE, with a [separate regression test suite](../../../tests/coreldraw/smart-node-cleaner/v0.77/). The product has also been tested in real CorelDRAW installations.
 
-```text
-ISCC.exe USTA-Smart-Node-Cleaner.iss
-```
+Close CorelDRAW before installing or uninstalling. The installer detects initialized 64-bit CorelDRAW X7–2022 profiles with VBA support. Personalized toolbar compatibility can vary.
 
-The [GitHub Actions workflow](../../../.github/workflows/build-usta-v077.yml)
-builds the EXE and runs the [separate test suite](../../../tests/coreldraw/smart-node-cleaner/v0.77).
-Build output is in `output/`; test downloads are Actions artifacts.
-
-Close CorelDRAW before installation or removal. Select a detected, initialized
-x64 profile; VBA must be available. An existing owned v0.77 installation must
-first be removed through Windows Installed Apps. Installation does not change
-macro security settings or reset the workspace.
-
-Discovery covers internal versions 17–24 (X7–2022). This is not verification of
-every version's macro or personalized-workspace compatibility. In particular,
-the reported CorelDRAW 2019 personalized-toolbar case remains unverified.
-
-Original artwork was supplied by the owner. The single-line header's left text
-band was edited; its right-hand artwork was preserved. See the repository
-[license](../../../LICENSE).
+**Code signing:** the publicly available v0.77 EXE is currently unsigned. The project is preparing for SignPath Foundation review; see the [code signing policy](../README.md#open-source-testing--signing). Source and installer files are licensed under [MIT](../../../LICENSE).
