@@ -6,11 +6,13 @@
 
 ## See it in action
 
-![USTA Smart Node Cleaner v0.77 screenshot](installer-v0.77/Screenshot%202026-10-21%20231707.png)
+![USTA Smart Node Cleaner v0.77 Windows installer welcome screen](installer-v0.77/usta-smart-node-cleaner-v0.77-windows-installer.png)
 
-![USTA Smart Node Cleaner v0.77 screenshot](installer-v0.77/Screenshot%202026-10-21%20231856.png)
+![USTA Smart Node Cleaner v0.77 CorelDRAW macro dialog with deviation tolerance and workload controls](installer-v0.77/usta-smart-node-cleaner-v0.77-tolerance-controls.png)
 
-![USTA Smart Node Cleaner v0.77 screenshot](installer-v0.77/Screenshot%202026-10-22%20010534.png)
+![CorelDRAW Bézier node reduction result: 626 nodes before, 600 after, 26 removed at 0.05 mm tolerance](installer-v0.77/usta-smart-node-cleaner-v0.77-bezier-node-reduction-result.png)
+
+**Real-world example:** 626 → 600 nodes (26 removed) at a 0.05 mm tolerance. Results vary with curve geometry and settings.
 
 ## What makes it useful?
 
