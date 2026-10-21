@@ -1,6 +1,6 @@
 # USTA Smart Node Cleaner v0.77
 [CmdletBinding()]
-param([ValidateSet('Detect','Check','Install','Uninstall','UninstallAll')][string]$Mode='Detect',[ValidateScript({$_ -eq 0 -or ($_ -ge 17 -and $_ -le 24)})][int]$Major=0,[string]$ProfilePath,[string]$StateRoot=(Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'Usta.Scripts\SmartNodeCleaner\v0.77'),[switch]$ReplaceExistingGms)
+param([ValidateSet('Detect','Check','Install','Uninstall','UninstallAll')][string]$Mode='Detect',[ValidateScript({$_ -eq 0 -or ($_ -ge 17 -and $_ -le 24)})][int]$Major=0,[string]$ProfilePath,[string]$StateRoot=(Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'Usta.Scripts\SmartNodeCleaner\v0.77'),[switch]$ReplaceExistingGms,[string]$ResultIni)
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'Usta.Files.ps1')
 if($Mode -eq 'Detect'){& (Join-Path $PSScriptRoot 'Get-CorelTargets.ps1');return}
@@ -22,4 +22,11 @@ $state=Join-Path $StateRoot ($Major.ToString()+'-'+$id)
 [void][IO.Directory]::CreateDirectory($state)
 $log=Join-Path $state ((Get-Date -Format yyyyMMdd-HHmmss)+'-'+$Mode+'.log')
 Start-Transcript -LiteralPath $log | Out-Null
-try{$operation=$Mode;if($Mode -eq 'Check'){$operation='Install'};Invoke-UstaFiles -Mode $operation -Profile $target.Profile -Major $Major -Source $PSScriptRoot -State $state -ReplaceExistingGms:$ReplaceExistingGms -CheckOnly:($Mode -eq 'Check') | ConvertTo-Json -Depth 6}finally{Stop-Transcript | Out-Null}
+try{$operation=$Mode;if($Mode -eq 'Check'){$operation='Install'};Invoke-UstaFiles -Mode $operation -Profile $target.Profile -Major $Major -Source $PSScriptRoot -State $state -ReplaceExistingGms:$ReplaceExistingGms -CheckOnly:($Mode -eq 'Check') | ConvertTo-Json -Depth 6}
+catch {
+    if($ResultIni){
+        $message=$_.Exception.Message -replace '[\r\n]+',' '
+        [IO.File]::WriteAllLines([IO.Path]::GetFullPath($ResultIni),@('[Result]',('Message='+$message)),[Text.Encoding]::Unicode)
+    }
+    throw
+}finally{Stop-Transcript | Out-Null}

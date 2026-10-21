@@ -114,6 +114,9 @@ end;
 function UstaCheckRunning(): Integer;
 var Code: Integer; Params: String;
 begin
+#ifdef UI_PREFLIGHT_TEST
+  Result := 0;
+#else
 #ifdef UI_PREVIEW
   Result := 1;
 #else
@@ -126,6 +129,7 @@ begin
   if Code <> 0 then RaiseException('Cannot check running CorelDRAW. See the setup log.');
   Result := StrToIntDef(GetIniString('Running','Count','-1',UstaRunningIni),-1);
   if Result < 0 then RaiseException('Invalid CorelDRAW process-check result.');
+#endif
 #endif
 end;
 
@@ -214,8 +218,8 @@ begin
     end;
     6: begin
       UstaHeading.Caption := 'Installation Cannot Continue';
-      UstaDescription.Caption := 'No successful installation has been reported. Please resolve the issue below.';
-      UstaBack.Visible := True; UstaPaintButton(UstaNext,'Retry',True);
+      UstaDescription.Caption := 'Please resolve the issue below, then run setup again.';
+      UstaBack.Visible := True; UstaNext.Visible := False;
     end;
   end;
   if UstaCompactBanner.Visible then begin
@@ -311,9 +315,9 @@ begin
   WizardForm.OuterNotebook.Visible := False;
   WizardForm.Bevel.Visible := False;
   WizardForm.NextButton.Default := False; WizardForm.CancelButton.Cancel := False;
-  // Inno's close guard requires a focusable native Cancel button. Keep it alive
-  // behind our panel; hiding it would disable both Cancel and the title-bar X.
-  WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False;
-  WizardForm.CancelButton.Visible := True; WizardForm.CancelButton.TabStop := False;
+  // Keep Inno's native navigation state intact behind the presentation panel.
+  // Hiding Next breaks silent navigation; hiding Cancel disables the close guard.
+  WizardForm.BackButton.TabStop := False; WizardForm.NextButton.TabStop := False;
+  WizardForm.CancelButton.TabStop := False;
   UstaPanel.BringToFront;
 end;

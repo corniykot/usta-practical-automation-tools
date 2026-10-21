@@ -33,6 +33,7 @@ jobs:
           & (Join-Path $dir 'Test-ToolbarPlacement.ps1') -BaselineWorkspace (Join-Path $dir 'evidence\toolbar-baseline.cdws') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-toolbar-tests')
           & (Join-Path $dir 'Test-OleDecimalLocales.ps1') -OutputPath (Join-Path $env:RUNNER_TEMP 'usta077-decimals.json')
           & (Join-Path $dir 'Test-SetupIntegration.ps1') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-tests')
+          & (Join-Path $dir 'Test-PreflightError.ps1') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-tests')
       - name: Compile setup EXE
         run: |
           $ErrorActionPreference='Stop'
@@ -49,6 +50,8 @@ jobs:
           if($LASTEXITCODE -ne 0){throw 'Installer compilation failed'}
           & $compiler /DUI_PREVIEW (Join-Path $dir 'USTA-Smart-Node-Cleaner.iss')
           if($LASTEXITCODE -ne 0){throw 'UI preview compilation failed'}
+          & $compiler /DUI_PREFLIGHT_TEST (Join-Path $dir 'USTA-Smart-Node-Cleaner.iss')
+          if($LASTEXITCODE -ne 0){throw 'Preflight UI regression executable compilation failed'}
           $output=Join-Path $dir 'output'
           $exe=Join-Path $output 'USTA-Smart-Node-Cleaner-v0.77-Setup.exe'
           if(!(Test-Path $exe)){throw 'Setup EXE not produced'}
@@ -81,6 +84,19 @@ jobs:
           }
           if($process.ExitCode -eq 0){throw 'Setup incorrectly succeeded without CorelDRAW'}
           "PASS: actual EXE started and reached CorelDRAW detection; expected no-target exit $($process.ExitCode)." | Set-Content (Join-Path $output 'STARTUP-TEST.txt') -Encoding UTF8
+      - name: Test native preflight error lifecycle
+        run: |
+          $ErrorActionPreference='Stop'
+          $output=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77\output'
+          $exe=Join-Path $output 'USTA-v077-Preflight-Test.exe'
+          $log=Join-Path $output 'preflight-ui-test.log'
+          $p=Start-Process $exe -ArgumentList ('/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG="'+$log+'"') -WindowStyle Hidden -PassThru
+          if(!$p.WaitForExit(60000)){$p.Kill();throw 'Disposable preflight test failed to exit'}
+          $text=Get-Content $log -Raw
+          if($text -notmatch 'PASS: native PrepareToInstall failure remains visible with Back and Cancel; progress hidden\.') {throw 'Native error-page regression assertion did not run'}
+          if($text -match 'Runtime error|Internal error|Preflight UI regression:'){throw 'Native preflight error-page regression failed'}
+          if($p.ExitCode -eq 0){throw 'Failure fixture incorrectly succeeded'}
+          'PASS: actual Inno failure event sequence retained error message and usable controls.' | Set-Content (Join-Path $output 'PREFLIGHT-UI-TEST.txt')
       - uses: actions/upload-artifact@v4
         with:
           name: USTA-Smart-Node-Cleaner-v0.77-Setup

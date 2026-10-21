@@ -1,6 +1,11 @@
 ﻿; USTA Smart Node Cleaner v0.77. Uses the verified file integration, no VBA build.
 #define AppName "USTA Smart Node Cleaner"
 #define AppVersion "0.77"
+#if defined(UI_PREVIEW) || defined(UI_PREFLIGHT_TEST)
+  #define PayloadFlags "dontcopy"
+#else
+  #define PayloadFlags "ignoreversion"
+#endif
 [Setup]
 AppId={{F893B682-45A2-4D44-AE3B-7F0512B07777}
 AppName={#AppName}
@@ -17,7 +22,9 @@ SetupLogging=yes
 UninstallLogging=yes
 OutputDir=output
 #ifndef UI_PREVIEW
+#ifndef UI_PREFLIGHT_TEST
 OutputBaseFilename=USTA-Smart-Node-Cleaner-v0.77-Setup
+#endif
 #endif
 SetupIconFile=ui\setup.ico
 UninstallDisplayIcon={app}\Usta_Smart_Node_Cleaner.ico
@@ -31,17 +38,22 @@ OutputBaseFilename=USTA-v077-UI-Preview
 Uninstallable=no
 CreateAppDir=no
 #endif
+#ifdef UI_PREFLIGHT_TEST
+OutputBaseFilename=USTA-v077-Preflight-Test
+Uninstallable=no
+CreateAppDir=no
+#endif
 CloseApplications=no
 RestartApplications=no
 UninstallDisplayName={#AppName} v{#AppVersion}
 
 [Files]
-Source: "UstaSmartNodeCleaner.gms"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Usta_Smart_Node_Cleaner.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Get-CorelTargets.ps1"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Manage-Usta.ps1"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Usta.Files.ps1"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Add-UstaToolbarButton.ps1"; DestDir: "{app}"; Flags: ignoreversion
+Source: "UstaSmartNodeCleaner.gms"; DestDir: "{app}"; Flags: {#PayloadFlags}
+Source: "Usta_Smart_Node_Cleaner.ico"; DestDir: "{app}"; Flags: {#PayloadFlags}
+Source: "Get-CorelTargets.ps1"; DestDir: "{app}"; Flags: {#PayloadFlags}
+Source: "Manage-Usta.ps1"; DestDir: "{app}"; Flags: {#PayloadFlags}
+Source: "Usta.Files.ps1"; DestDir: "{app}"; Flags: {#PayloadFlags}
+Source: "Add-UstaToolbarButton.ps1"; DestDir: "{app}"; Flags: {#PayloadFlags}
 
 Source: "Get-RunningCorel.ps1"; Flags: dontcopy
 Source: "ui\welcome.png"; Flags: dontcopy
@@ -60,7 +72,7 @@ Type: filesandordirs; Name: "{app}\Logs"
 [Code]
 var
   TargetPage: TInputOptionWizardPage;
-  TargetIni, LogDirectory: String;
+  TargetIni, LogDirectory, PreflightFailure: String;
   IntegrationFailed: Boolean;
 
 function PowerShellPath(): String;
@@ -87,6 +99,7 @@ begin
     SourcePath + '\Manage-Usta.ps1" -Mode ' + Mode +
     ' -Major ' + TargetValue('Major') + ' -ProfilePath "' + TargetValue('Profile') +
     '" -StateRoot "' + ExpandConstant('{app}\State') + '"';
+  if Mode='Check' then Result := Result+' -ResultIni "'+ExpandConstant('{tmp}\preflight-result.ini')+'"';
 end;
 
 #include "Usta.UI.iss"
@@ -95,7 +108,7 @@ procedure InitializeWizard();
 var Params, Requested: String;
     Count, I, Code, Preferred: Integer;
 begin
-#ifdef UI_PREVIEW
+#if defined(UI_PREVIEW) || defined(UI_PREFLIGHT_TEST)
   // Dedicated visual test executable: no discovery, integration or installed files.
   TargetPage := CreateInputOptionPage(wpWelcome,'Preview','','',True,False);
   TargetPage.Add('CorelDRAW Graphics Suite 2018 (64-bit)');
@@ -140,19 +153,24 @@ end;
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 var Code: Integer;
 begin
-  Result := '';
-  if SelectedIndex() < 0 then begin Result := 'Select a CorelDRAW version.'; Exit; end;
-  if UstaCheckRunning() > 0 then begin Result := 'Save your documents and close CorelDRAW, then retry.'; Exit; end;
+  Result := ''; PreflightFailure := '';
+#ifdef UI_PREFLIGHT_TEST
+  PreflightFailure := 'Already installed. Uninstall this version first.';
+  Result := PreflightFailure; Exit;
+#endif
+  if SelectedIndex() < 0 then begin Result := 'Select a CorelDRAW version.'; PreflightFailure := Result; Exit; end;
+  if UstaCheckRunning() > 0 then begin Result := 'Save your documents and close CorelDRAW, then retry.'; PreflightFailure := Result; Exit; end;
   ExtractTemporaryFile('Manage-Usta.ps1');
   ExtractTemporaryFile('Usta.Files.ps1');
   ExtractTemporaryFile('Add-UstaToolbarButton.ps1');
   ExtractTemporaryFile('UstaSmartNodeCleaner.gms');
   ExtractTemporaryFile('Usta_Smart_Node_Cleaner.ico');
+  DeleteFile(ExpandConstant('{tmp}\preflight-result.ini'));
   if not Exec(PowerShellPath(), IntegrationParameters('Check', ExpandConstant('{tmp}')),
     ExpandConstant('{tmp}'), SW_HIDE, ewWaitUntilTerminated, Code) then
     Result := 'Could not start preflight: ' + SysErrorMessage(Code)
-  else if Code <> 0 then Result := 'Preflight failed. Close CorelDRAW and inspect: ' + ExpandConstant('{app}\State');
-  if Result<>'' then begin UstaRender(6); UstaBody.Caption := Result; end;
+  else if Code <> 0 then Result := GetIniString('Result','Message','Preflight failed.',ExpandConstant('{tmp}\preflight-result.ini'));
+  if Result<>'' then PreflightFailure := Result+#13#10+#13#10+'Diagnostics: '+ExpandConstant('{app}\State');
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -200,7 +218,6 @@ var Preview: String;
 begin
   if UstaPanel=nil then Exit;
   UstaPageID := CurPageID;
-  WizardForm.BackButton.Visible := False; WizardForm.NextButton.Visible := False; WizardForm.CancelButton.Visible := True;
   WizardForm.Bevel.Visible := False;
 #ifdef UI_PREVIEW
   Preview := ExpandConstant('{param:PREVIEW|welcome}');
@@ -217,8 +234,20 @@ begin
   else if CurPageID=wpInstalling then UstaRender(4)
   else if CurPageID=wpFinished then UstaRender(5)
   else if CurPageID=wpPreparing then begin
-    UstaRender(4); UstaHeading.Caption := 'Checking Installation';
-    UstaBody.Caption := 'Checking the selected CorelDRAW workspace...';
+    if PreflightFailure<>'' then begin
+      UstaRender(6); UstaBody.Caption := PreflightFailure;
+      Log('USTA preflight error page displayed: '+PreflightFailure);
+#ifdef UI_PREFLIGHT_TEST
+      if UstaProgress.Visible or UstaNext.Visible or not UstaCancel.Visible or not UstaBack.Visible then
+        RaiseException('Preflight UI regression: invalid error-page controls');
+      if UstaBody.Caption<>PreflightFailure then RaiseException('Preflight UI regression: error message overwritten');
+      Log('PASS: native PrepareToInstall failure remains visible with Back and Cancel; progress hidden.');
+#endif
+    end else begin
+      UstaRender(4); UstaHeading.Caption := 'Checking Installation';
+      UstaDescription.Caption := '';
+      UstaBody.Caption := 'Checking the selected CorelDRAW workspace...';
+    end;
   end;
 #endif
 end;
