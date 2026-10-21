@@ -1,5 +1,0 @@
-{
-  "Status": "PASS",
-  "GmsSHA256": "A98A01F9C6AF70032B13B5F621CD905819111EE50339A410A2966AE3756D6C99",
-  "Scope": "Only version labels and matching V077 entry name differ from tested decimal-fixed v0.75; VB_Base excluded"
-}

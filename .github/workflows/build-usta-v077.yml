@@ -6,6 +6,7 @@ on:
     paths:
       - 'coreldraw/smart-node-cleaner/installer-v0.77/**'
       - '.github/workflows/build-usta-v077.yml'
+      - 'tests/coreldraw/smart-node-cleaner/v0.77/**'
 permissions:
   contents: read
 jobs:
@@ -20,7 +21,11 @@ jobs:
       - name: Validate scripts and integration
         run: |
           $ErrorActionPreference='Stop'
-          $dir=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77'
+          $source=Join-Path $env:GITHUB_WORKSPACE 'coreldraw\smart-node-cleaner\installer-v0.77'
+          $tests=Join-Path $env:GITHUB_WORKSPACE 'tests\coreldraw\smart-node-cleaner\v0.77'
+          $dir=Join-Path $env:RUNNER_TEMP 'usta077-validation-source'
+          Copy-Item -LiteralPath $source -Destination $dir -Recurse
+          Copy-Item (Join-Path $tests '*.ps1') $dir
           $assets=Get-Content (Join-Path $dir 'ui\assets-sha256.json') -Raw | ConvertFrom-Json
           foreach($asset in $assets){
             if((Get-FileHash (Join-Path $dir ('ui\'+$asset.Name))).Hash -ne $asset.Hash){throw ('UI resource hash mismatch: '+$asset.Name)}
@@ -30,7 +35,7 @@ jobs:
             [void][Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$tokens,[ref]$errors)
             if($errors){throw ($errors | Out-String)}
           }
-          & (Join-Path $dir 'Test-ToolbarPlacement.ps1') -BaselineWorkspace (Join-Path $dir 'evidence\toolbar-baseline.cdws') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-toolbar-tests')
+          & (Join-Path $dir 'Test-ToolbarPlacement.ps1') -BaselineWorkspace (Join-Path $tests 'fixtures\toolbar-baseline.cdws') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-toolbar-tests')
           & (Join-Path $dir 'Test-OleDecimalLocales.ps1') -OutputPath (Join-Path $env:RUNNER_TEMP 'usta077-decimals.json')
           & (Join-Path $dir 'Test-SetupIntegration.ps1') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-tests')
           & (Join-Path $dir 'Test-PreflightError.ps1') -TestRoot (Join-Path $env:RUNNER_TEMP 'usta077-tests')
